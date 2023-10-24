@@ -1,4 +1,5 @@
-host-keyword, amp-api.podcasts.apple.com, Podcast
 host-keyword, bookkeeper.itunes.apple.com, Podcast
+host-keyword, bag.itunes.apple.com, Podcast
 host-keyword, lookup-api.apple.com, Podcast
+host-suffix, podcasts.apple.com, Podcast
 host-suffix, buzzsprout.com, Podcast
