@@ -1,0 +1,6 @@
+payload:
+  - DOMAIN, bookkeeper.itunes.apple.com
+  - DOMAIN, bag.itunes.apple.com
+  - DOMAIN, lookup-api.apple.com
+  - DOMAIN-SUFFIX, podcasts.apple.com
+  - DOMAIN-SUFFIX, buzzsprout.com
