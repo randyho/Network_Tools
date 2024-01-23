@@ -3,3 +3,4 @@ DOMAIN, bag.itunes.apple.com, Podcast
 DOMAIN, lookup-api.apple.com, Podcast
 DOMAIN-SUFFIX, podcasts.apple.com, Podcast
 DOMAIN-SUFFIX, buzzsprout.com, Podcast
+DOMAIN-SUFFIX, open.firstory.me, Podcast
