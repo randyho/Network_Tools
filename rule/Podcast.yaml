@@ -4,4 +4,4 @@ payload:
   - DOMAIN, lookup-api.apple.com
   - DOMAIN-SUFFIX, podcasts.apple.com
   - DOMAIN-SUFFIX, buzzsprout.com
-  - DOMAIN-SUFFIX, open.firstory.me
+  - DOMAIN-SUFFIX, firstory.me
