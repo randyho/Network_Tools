@@ -1,9 +1,9 @@
 #!name = 百度地图
 #!desc = 移除广告
 #!author = Randy
-#!update = 2023-05-05 18:35
-#!homepage = https://github.com/RuCu6/Loon/tree/main/Plugins
-#!icon = https://raw.githubusercontent.com/RuCu6/Loon/main/Icons/plugin/bdmap.png
+#!update = 2024-05-05 18:35
+#!homepage = https://github.com/randyho/Network_Tools
+#!icon = https://raw.githubusercontent.com/randyho/Network_Tools/main/icon/baidu_map.png
 
 [Rule]
 DOMAIN, afd.baidu.com, REJECT
@@ -25,7 +25,7 @@ DOMAIN, lc.map.baidu.com, REJECT
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2\/\?qt=ads reject-200
 
 # 我的页面
-^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? reject-200
 ^https?:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic reject-200
 
 # 打车页
@@ -36,10 +36,10 @@ DOMAIN, lc.map.baidu.com, REJECT
 
 [Script]
 # 组件包
-http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/RuCu6/Loon/main/Scripts/bdmap.js, tag = 组件包
+http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, tag = 组件包
 
 # 我的页面
-http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? script-path = https://raw.githubusercontent.com/RuCu6/Loon/main/Scripts/bdmap.js, tag = 我的页面
+http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, tag = 我的页面
 
 [MITM]
 hostname = newclient.map.baidu.com, yongche.baidu.com
