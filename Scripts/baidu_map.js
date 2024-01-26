@@ -23,7 +23,7 @@ if (url.includes("/usersystem/mine/page")) {
     "map.iphone.baidu.cater", // 美食
     "map.iphone.baidu.comdetailtmpl", // 通用详情页
     "map.iphone.baidu.hotel", // 酒店
-    // "map.iphone.baidu.movie", // 电影
+    "map.iphone.baidu.movie", // 电影
     "map.iphone.baidu.nearbybraavos", // 美食休闲
     "map.iphone.baidu.nearbycontent", // 周边组件
     "map.iphone.baidu.scenery", // 景点
