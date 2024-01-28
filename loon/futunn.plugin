@@ -1,0 +1,13 @@
+#!name = 富途牛牛
+#!desc = 移除广告
+#!author = Randy
+#!update = 2024-05-05 18:35
+#!homepage = https://github.com/randyho/Network_Tools
+#!icon = https://raw.githubusercontent.com/randyho/Network_Tools/main/icon/baidu_map.png
+
+[Rewrite]
+#富途牛牛 #我的横幅广告
+^https:\/\/api\.futunn\.com\/v2\/optimus\/my-homepage-config url reject-dict
+
+#富途牛牛 #账户和交易横幅广告
+^https:\/\/api\.futunn\.com\/v2\/config\/promote-config url reject-dict
