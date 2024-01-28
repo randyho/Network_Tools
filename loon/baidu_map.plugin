@@ -12,28 +12,28 @@ DOMAIN, httpdns.baidubce.com, REJECT
 DOMAIN, lc.map.baidu.com, REJECT
 
 [Rewrite]
-# 组件包
+# 组件
 ^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?container=du_aide_module reject-200
 ^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?container=du_card_ugc reject-200
 ^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?container=du_trip_route_tab reject-200
 ^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?oem= reject-200
 
 # 首页 小横条,左上角动图
-^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? reject-200
-^https?:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw reject-200
-^https?:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc reject-200
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-200
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-200
+^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-dict
 
 # 我的页面
-^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? reject-200
-^https?:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic reject-200
+^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic reject-dict
 
 # 打车页
-^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/notice reject-200
-^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/activity\/talos\/activitycard\? reject-200
-^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/popup\/getentrancecordova reject-200
-^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/baseinfo reject-200
+^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/notice reject-dict
+^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/activity\/talos\/activitycard\? reject-dict
+^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/popup\/getentrancecordova reject-dict
+^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/baseinfo reject-dict
 
 [Script]
 # 组件包
