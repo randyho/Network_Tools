@@ -23,6 +23,7 @@ DOMAIN, lc.map.baidu.com, REJECT
 ^https?:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw reject-200
 ^https?:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc reject-200
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-200
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-200
 
 # 我的页面
 ^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? reject-200
