@@ -28,7 +28,7 @@ hostname = newclient.map.baidu.com, yongche.baidu.com, httpdns.baidubce.com, ugc
 # 我的页面
 ^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? url reject-dict
 ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic url reject-dict
-# ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
+^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
 
 # 打车页
 ^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/notice url reject-dict
