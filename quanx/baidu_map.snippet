@@ -3,17 +3,14 @@
 #!author = Randy
 #!update = 2023-05-05 18:35
 
-hostname = newclient.map.baidu.com, yongche.baidu.com, httpdns.baidubce.com, ugc.map.baidu.com, sofire.baidu.com
-
-#百度地图开屏广告
-#^https:\/\/dss0\.bdstatic\.com\/.+/tam-ogel\/.+\.jpg _ reject
+hostname = newclient.map.baidu.com, yongche.baidu.com, httpdns.baidubce.com, ugc.map.baidu.com
 
 # 首页 
 # 小横条
 ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? url reject-dict
 # 左上角动图
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads url reject-200
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar url reject-200
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads url reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar url reject-dict
 # 搜索推广
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw url reject-dict
 # 搜索框下足记Tips
@@ -30,7 +27,7 @@ hostname = newclient.map.baidu.com, yongche.baidu.com, httpdns.baidubce.com, ugc
 
 # 我的页面
 ^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? url reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic url reject-200
+^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic url reject-dict
 # ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
 
 # 打车页
