@@ -12,3 +12,6 @@
 
 #账户和交易横幅广告
 ^https:\/\/api\.futunn\.com\/v2\/config\/promote-config reject-dict
+
+[Mitm]
+hostname = api.futunn.com
