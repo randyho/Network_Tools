@@ -1,7 +1,7 @@
 #!name = 百度地图
 #!desc = 移除广告
 #!author = Randy
-#!update = 2023-05-05 18:35
+#!update = 2024-01-30 18:35
 
 hostname = newclient.map.baidu.com, yongche.baidu.com, httpdns.baidubce.com, ugc.map.baidu.com
 
@@ -11,7 +11,7 @@ hostname = newclient.map.baidu.com, yongche.baidu.com, httpdns.baidubce.com, ugc
 # 开屏广告
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads url reject-dict
 # 左上角动图
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2\/\?qt=bar url reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar url reject-dict
 # 搜索推广
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw url reject-dict
 # 搜索框下足记Tips
