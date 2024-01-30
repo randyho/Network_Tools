@@ -15,7 +15,7 @@ if (url.includes("/usersystem/mine/page")) {
   }
 } else if (url.includes("/noticebar/get")) {
    if (obj.content?.data) {
-    obj.content.data = {};
+    obj.content["data"] = {};
   }
   if (obj.content?.multi_data) {
     obj.content.multi_data = [];
