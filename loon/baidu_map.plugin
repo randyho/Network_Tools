@@ -14,7 +14,7 @@ DOMAIN, lc.map.baidu.com, REJECT
 [Rewrite]
 # 首页 
 # 小横条
-^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? url reject-dict
+# ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? url reject-dict
 # 开屏广告
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads url reject-dict
 # 左上角动图
@@ -43,11 +43,12 @@ DOMAIN, lc.map.baidu.com, REJECT
 ^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/baseinfo reject-dict
 
 [Script]
-# 组件包
-http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 组件包
-
+# 小横条
+http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 小横条
 # 我的页面
 http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 我的页面
+# 组件包
+http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 组件包
 
 [Mitm]
 hostname = newclient.map.baidu.com, yongche.baidu.com, ugc.map.baidu.com
