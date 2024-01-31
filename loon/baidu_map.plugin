@@ -18,6 +18,8 @@ DOMAIN, lc.map.baidu.com, REJECT
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-dict
 # 左上角动图
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-dict
+# 地点详情
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=avocado url reject-dict
 # 搜索推广
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw reject-dict
 # 搜索框下足记Tips
