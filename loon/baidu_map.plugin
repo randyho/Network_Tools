@@ -1,5 +1,5 @@
 #!name = 百度地图
-#!desc = 移除广告
+#!desc = 移除广告，仅在 15.x 版本测试
 #!author = Randy RuCu6
 #!update = 2024-01-31 12:35
 #!homepage = https://github.com/randyho/Network_Tools
@@ -52,4 +52,4 @@ http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/p
 http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 组件包
 
 [Mitm]
-hostname = 163.177.17.*, newclient.map.baidu.com, yongche.baidu.com, ugc.map.baidu.com
+hostname = newclient.map.baidu.com, yongche.baidu.com, ugc.map.baidu.com, 163.177.17.*
