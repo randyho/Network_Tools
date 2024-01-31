@@ -13,7 +13,7 @@ DOMAIN, lc.map.baidu.com, REJECT
 [Rewrite]
 # 首页 
 # 小横条
-^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? reject-dict
+# ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? reject-dict
 # 开屏广告
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-dict
 # 左上角动图
@@ -43,7 +43,7 @@ DOMAIN, lc.map.baidu.com, REJECT
 
 [Script]
 # 小横条
-# http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 小横条
+http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 小横条
 # 我的页面
 http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 我的页面
 # 组件包
