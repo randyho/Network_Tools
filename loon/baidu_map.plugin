@@ -19,39 +19,7 @@ DOMAIN, lc.map.baidu.com, REJECT
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-dict
 # 左上角动图
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-dict
-# 地点详情
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=avocado url reject-dict
-# 搜索推广
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw reject-dict
-# 搜索框下足记Tips
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc reject-dict
-# 首页底部推荐
-^https:\/\/ugc\.map\.baidu\.com\/govui\/rich_content reject-dict
 
-# 组件
-^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?container=du_aide_module reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?container=du_card_ugc reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?container=du_trip_route_tab reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?oem= reject-dict
-
-# 我的页面
-^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic reject-dict
-
-# 打车页
-#^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/baseinfo reject-dict
-#^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/notice reject-dict
-^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/activity\/talos\/activitycard\? reject-dict
-^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/popup\/getentrancecordova reject-dict
-
-
-[Script]
-# 小横条
-# http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 小横条
-# 我的页面
-http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 我的页面
-# 组件包
-http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 组件包
 
 [Mitm]
 hostname = newclient.map.baidu.com, yongche.baidu.com, ugc.map.baidu.com, 163.177.17.*
