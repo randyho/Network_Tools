@@ -10,8 +10,7 @@
 # 首页 
 # 小横条
 ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? reject-dict
-# 开屏广告
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-dict
+
 
 [Mitm]
 hostname = newclient.map.baidu.com, 163.177.17.*
