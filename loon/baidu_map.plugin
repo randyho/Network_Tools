@@ -17,13 +17,13 @@ IP-CIDR,186.76.76.200/32, REJECT
 [Rewrite]
 # 首页 
 # 小横条
-^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? reject-dict
+# ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? reject-dict
 # 开屏广告
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-dict
 # 左上角动图
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-dict
 # 地点详情
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=avocado url reject-dict
+# ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=avocado url reject-dict
 # 搜索推广
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw reject-dict
 # 搜索框下足记Tips
@@ -50,7 +50,7 @@ IP-CIDR,186.76.76.200/32, REJECT
 
 [Script]
 # 小横条
-# http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 小横条
+http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 小横条
 http-response ^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 小横条
 # 我的页面
 http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 我的页面
@@ -58,5 +58,4 @@ http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/p
 http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 组件包
 
 [Mitm]
-hostname = newclient.map.baidu.com, yongche.baidu.com, ugc.map.baidu.com
-# , 163.177.17.*
+hostname = newclient.map.baidu.com, yongche.baidu.com, ugc.map.baidu.com, 163.177.17.*
