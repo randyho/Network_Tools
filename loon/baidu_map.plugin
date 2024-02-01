@@ -5,11 +5,6 @@
 #!homepage = https://github.com/randyho/Network_Tools
 #!icon = https://raw.githubusercontent.com/randyho/Network_Tools/main/icon/baidu_map.png
 
-[Rule]
-DOMAIN, afd.baidu.com, REJECT
-DOMAIN, afdconf.baidu.com, REJECT
-DOMAIN, httpdns.baidubce.com, REJECT
-DOMAIN, lc.map.baidu.com, REJECT
 
 [Rewrite]
 # 首页 
