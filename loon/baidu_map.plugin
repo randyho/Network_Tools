@@ -14,4 +14,4 @@
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-dict
 
 [Mitm]
-hostname = newclient.map.baidu.com
+hostname = newclient.map.baidu.com, 163.177.17.*
