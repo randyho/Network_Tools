@@ -15,10 +15,6 @@ DOMAIN, lc.map.baidu.com, REJECT
 # 首页 
 # 小横条
 ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? reject-dict
-# 开屏广告
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-dict
-# 左上角动图
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-dict
 
 
 [Mitm]
