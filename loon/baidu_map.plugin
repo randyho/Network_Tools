@@ -13,4 +13,4 @@
 
 
 [Mitm]
-hostname = newclient.map.baidu.com, yongche.baidu.com, ugc.map.baidu.com, 163.177.17.*
+hostname = newclient.map.baidu.com
