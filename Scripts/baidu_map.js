@@ -20,6 +20,8 @@ if (url.includes("/usersystem/mine/page")) {
   if (obj.content?.multi_data) {
     obj.content.multi_data = [];
   }
+} else if (url.includes("/gocube/post/homepage_bar") {
+  obj.isShow = false;
 } else if (url.includes("/imap/dl/s/UpdateInfo")) {
   const item = [
     "map.iphone.baidu.aihomenearbycontent", // 新首页附近组件
