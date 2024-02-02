@@ -44,6 +44,9 @@ DOMAIN, httpdns.baidubce.com, REJECT
 ^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/activity\/talos\/activitycard\? reject-dict
 ^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/popup\/getentrancecordova reject-dict
 
+# 信息上传
+^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/ulog reject
+
 [Script]
 # 内容推荐
 http-response ^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 小横条
