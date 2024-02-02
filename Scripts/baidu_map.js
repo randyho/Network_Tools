@@ -2,27 +2,7 @@ const url = $request.url;
 if (!$response.body) $done({});
 let obj = JSON.parse($response.body);
 
-if (url.includes("/usersystem/mine/page")) {
-  const item = [
-    "car", // 我的车辆
-    "gold", // 金币商城等活动
-    "voice" // 语音包
-  ];
-  if (obj.data) {
-    item.forEach((i) => {
-      delete obj.data[i];
-    });
-  }
-} else if (url.includes("/noticebar/get")) {
-   if (obj.content?.data) {
-    obj.content["data"] = {};
-  }
-  if (obj.content?.multi_data) {
-    obj.content.multi_data = [];
-  }
-} else if (url.includes("/gocube/post/homepage_bar") {
-  obj.isShow = false;
-} else if (url.includes("/imap/dl/s/UpdateInfo")) {
+if (url.includes("/imap/dl/s/UpdateInfo")) {
   const item = [
     "map.iphone.baidu.aihomenearbycontent", // 新首页附近组件
     "map.iphone.baidu.cater", // 美食
@@ -41,6 +21,26 @@ if (url.includes("/usersystem/mine/page")) {
       delete obj.packages[i];
     });
   }
-}
+} else if (url.includes("/noticebar/get")) {
+  if (obj.content?.data) {
+    obj.content["data"] = {};
+  }
+  if (obj.content?.multi_data) {
+    obj.content.multi_data = [];
+  }
+} else if (url.includes("/gocube/post/homepage_bar") {
+  obj.isShow = false;
+} else if (url.includes("/usersystem/mine/page")) {
+  const item = [
+    "car", // 我的车辆
+    "gold", // 金币商城等活动
+    "voice" // 语音包
+  ];
+  if (obj.data) {
+    item.forEach((i) => {
+      delete obj.data[i];
+    });
+  }
+}  
 
 $done({ body: JSON.stringify(obj) });
