@@ -45,7 +45,7 @@ DOMAIN, httpdns.baidubce.com, REJECT
 ^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/popup\/getentrancecordova reject-dict
 
 # 信息上传
-^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/ulog reject
+^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/ulog reject-drop
 
 [Script]
 # 内容推荐
