@@ -8,8 +8,8 @@ hostname = newclient.map.baidu.com, yongche.baidu.com, ugc.map.baidu.com
 
 # 首页 
 # 小横条
-# ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? url reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
+^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? url reject-dict
+# ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
 # 开屏广告
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads url reject-dict
 # 左上角动图
@@ -37,13 +37,13 @@ hostname = newclient.map.baidu.com, yongche.baidu.com, ugc.map.baidu.com
 ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
 
 # 打车页
+^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/baseinfo url reject-dict
 ^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/notice url reject-dict
 ^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/activity\/talos\/activitycard\? url reject-dict
 ^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/popup\/getentrancecordovaurl url reject-dict
-^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/baseinfo url reject-dict
 
+# 信息上传
 ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/ulog url reject
-
 
 # > DNS处理
 ^https:\/\/httpdns\.baidubce\.com url reject-dict
