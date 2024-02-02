@@ -39,8 +39,8 @@ DOMAIN, httpdns.baidubce.com, REJECT
 ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic reject-dict
 
 # 打车页
-#^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/baseinfo reject-dict
-#^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/notice reject-dict
+^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/baseinfo reject-dict
+^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/notice reject-dict
 ^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/activity\/talos\/activitycard\? reject-dict
 ^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/popup\/getentrancecordova reject-dict
 
