@@ -14,7 +14,7 @@ hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.17
 # 左上角动图
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar url reject-dict
 # 地点详情
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=avocado url reject-dict
+# ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=avocado url reject-dict
 # 搜索推广
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw url reject-dict
 # 搜索框下足记Tips
@@ -22,6 +22,8 @@ hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.17
 # 内容推荐
 ^https:\/\/ugc\.map\.baidu\.com\/govui\/rich_content url reject-dict
 ^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\?type=bar url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
+# 出行页banner
+^https:\/\/zt\.baidu\.com\/(tp)?activity\/.*fr=walkbanner reject-dict
 
 # 组件包
 ^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?container=du_aide_module url reject-dict
