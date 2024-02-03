@@ -28,7 +28,7 @@ if (url.includes("/imap/dl/s/UpdateInfo")) {
   if (obj.content?.multi_data) {
     obj.content.multi_data = [];
   }
-} else if (url.includes("/gocube/post/homepage_bar") {
+} else if (url.includes("/gocube/post/homepage_bar")) {
   obj.isShow = false;
 } else if (url.includes("/usersystem/mine/page")) {
   const item = [
