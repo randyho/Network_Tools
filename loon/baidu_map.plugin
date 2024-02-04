@@ -44,8 +44,8 @@ DOMAIN, httpdns.baidubce.com, REJECT
 ^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/activity\/talos\/activitycard\? reject-dict
 ^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/popup\/getentrancecordova reject-dict
 
-出行页banner
-^https:\/\/zt\.baidu\.com\/(activity|tpactivity)\/.*fr=walkbanner reject-dict
+# 出行页banner
+#^https:\/\/zt\.baidu\.com\/(activity|tpactivity)\/.*fr=walkbanner reject-dict
 
 # 信息上传
 ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/ulog reject-drop
@@ -61,4 +61,4 @@ http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/p
 http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 组件包
 
 [Mitm]
-hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, zt.baidu.com, 163.177.17.*, 180.76.76.112, 180.76.76.200
+hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.177.17.*, 180.76.76.112, 180.76.76.200
