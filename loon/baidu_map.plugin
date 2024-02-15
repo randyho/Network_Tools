@@ -36,7 +36,7 @@ DOMAIN, httpdns.baidubce.com, REJECT
 
 # 我的页面
 ^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic reject-dict
+#^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic reject-dict
 
 # 打车页
 ^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/baseinfo reject-dict
@@ -48,7 +48,7 @@ DOMAIN, httpdns.baidubce.com, REJECT
 #^https:\/\/zt\.baidu\.com\/(activity|tpactivity)\/.*fr=walkbanner reject-dict
 
 # 信息上传
-^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/ulog reject-drop
+^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/ulog\/up reject-drop
 
 [Script]
 # 内容推荐
