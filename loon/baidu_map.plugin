@@ -61,4 +61,4 @@ http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/p
 http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 组件包
 
 [Mitm]
-hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.177.17.*, 14.215.182.*, 180.76.76.112, 180.76.76.200
+hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.177.17.*, 14.215.182.*, 180.76.76.112, 180.76.76.200, 180.101.212.26, 182.61.62.191, 111.177.3.35
