@@ -18,7 +18,7 @@ hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.17
 # 搜索推广
 #^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw url reject-dict
 # 搜索框下足记Tips
-#^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc url reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc url reject-dict
 # 内容推荐
 ^https:\/\/ugc\.map\.baidu\.com\/govui\/rich_content url reject-dict
 #^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\?type=bar url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
