@@ -1,28 +1,27 @@
 #!name = 百度地图
-#!desc = 移除广告
+#!desc = 移除广告，仅在 15.x 版本测试，IP地址需根据不同地区修改
 #!author = Randy RuCu6
 #!update = 2024-01-30 18:35
 
 hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.177.17.*, 14.215.182.*, 180.76.76.112, 180.76.76.200
 
-# 小横条
-^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? url reject-dict
-# ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
 # 开屏广告
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads url reject-dict
-# 左上角动图
+# 左上角动图 小横条广告
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar url reject-dict
+# 小横条 广告
+^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? url reject-dict
+# 小横条 足记Tips
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc url reject-dict
 # 地点详情
 # ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=avocado url reject-dict
 # 搜索推广
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw url reject-dict
-# 搜索框下足记Tips
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc url reject-dict
 # 底部内容推荐
 ^https:\/\/ugc\.map\.baidu\.com\/govui\/rich_content url reject-dict
 ^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\?type=bar url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
 # 出行页banner
-^https:\/\/zt\.baidu\.com\/(activity|tpactivity)\/.*fr=walkbanner url reject-dict
+#^https:\/\/zt\.baidu\.com\/(activity|tpactivity)\/.*fr=walkbanner url reject-dict
 
 # 组件包
 ^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?container=du_aide_module url reject-dict
@@ -33,7 +32,7 @@ hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.17
 
 # 我的页面
 ^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? url reject-dict
-#^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic url reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic url reject-dict
 ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
 
 # 打车页
