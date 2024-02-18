@@ -20,9 +20,9 @@ hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.17
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc url reject-dict
 # 内容推荐
 ^https:\/\/ugc\.map\.baidu\.com\/govui\/rich_content url reject-dict
-^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\?type=bar url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
+#^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\?type=bar url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
 # 出行页banner
-u^https:\/\/zt\.baidu\.com\/(activity|tpactivity)\/.*fr=walkbanner url reject-dict
+^https:\/\/zt\.baidu\.com\/(activity|tpactivity)\/.*fr=walkbanner url reject-dict
 
 # 组件包
 ^https:\/\/newclient\.map\.baidu\.com\/client\/crossmarketing\/\?container=du_aide_module url reject-dict
