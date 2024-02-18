@@ -20,7 +20,7 @@ hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.17
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc url reject-dict
 # 内容推荐
 ^https:\/\/ugc\.map\.baidu\.com\/govui\/rich_content url reject-dict
-#^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\?type=bar url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
+^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\?type=bar url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
 # 出行页banner
 ^https:\/\/zt\.baidu\.com\/(activity|tpactivity)\/.*fr=walkbanner url reject-dict
 
@@ -33,7 +33,7 @@ hostname = newclient.map.baidu.com, ugc.map.baidu.com, yongche.baidu.com, 163.17
 
 # 我的页面
 ^https:\/\/newclient\.map\.baidu\.com\/grow-engine\/api\/common\/userHome\? url reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic url reject-dict
+#^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic url reject-dict
 ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? url script-response-body https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js
 
 # 打车页
