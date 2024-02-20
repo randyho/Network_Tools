@@ -19,10 +19,10 @@ DOMAIN, httpsdns.baidubce.com, REJECT
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-dict
 # 小横条
 ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? reject-dict
-# 搜索推广
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw reject-dict
 # 搜索框下足记Tips
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=rgc reject-dict
+# 搜索推广
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui.*qt=hw reject-dict
 # 内容推荐
 ^https:\/\/ugc\.map\.baidu\.com\/govui\/rich_content reject-dict
 
