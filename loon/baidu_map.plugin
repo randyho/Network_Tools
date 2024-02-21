@@ -13,7 +13,7 @@ DOMAIN, httpdns.baidubce.com, REJECT
 DOMAIN, httpsdns.baidubce.com, REJECT
 
 [Rewrite]
-# 开屏广告
+# 开屏广告 路线banner广告
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-dict
 # 左上角动图
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-dict
