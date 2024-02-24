@@ -16,7 +16,7 @@ DOMAIN, httpsdns.baidubce.com, REJECT
 # 开屏广告 路线banner广告
 ^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads reject-dict
 # 左上角动图
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-dict
+^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=bar reject-drop
 # 小横条
 ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? reject-dict
 # 搜索框下足记Tips
