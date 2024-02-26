@@ -1,9 +1,7 @@
 const url = $request.url;
 if (!$response.body) $done({});
-let obj = JSON.parse($response.body);
 
-
-if ($request.url.includes("argus/api/v3/user/getaccountpage")) {
+if ($request.url.includes("missav.com")) {
   let div_ad = document.querySelectorAll('div.mx-auto[style]')
     for (i = 0; i < div_ad.length; i++) {
         if (div_ad[i].querySelectorAll('[target=\'_blank\']').length >= 1) {
