@@ -53,13 +53,13 @@ DOMAIN, httpsdns.baidubce.com, REJECT
 
 [Script]
 # 内容推荐
-http-response ^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 内容推荐
+http-response ^https:\/\/ugc\.map\.baidu\.com\/gocube\/post\/homepage_bar\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/scripts/baidu_map.js, requires-body = true, tag = 内容推荐
 # 小横条
-http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 小横条
+http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/scripts/baidu_map.js, requires-body = true, tag = 小横条
 # 我的页面
-http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 我的页面
+http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/mine\/page\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/scripts/baidu_map.js, requires-body = true, tag = 我的页面
 # 组件包
-http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/Scripts/baidu_map.js, requires-body = true, tag = 组件包
+http-response ^https:\/\/newclient\.map\.baidu\.com\/client\/imap\/dl\/s\/UpdateInfo\.php\? script-path = https://raw.githubusercontent.com/randyho/Network_Tools/main/scripts/baidu_map.js, requires-body = true, tag = 组件包
 
 [Mitm]
 hostname = newclient.map.baidu.com,ugc.map.baidu.com,yongche.baidu.com,163.177.17.*,14.215.182.*,180.76.76.112,180.76.76.200
