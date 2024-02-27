@@ -1,17 +1,28 @@
 const url = $request.url;
 if (!$response.body) $done({});
 
-if ($request.url.includes("missav.com")) {
-  let div_ad = document.querySelectorAll('div.mx-auto[style]')
-    for (i = 0; i < div_ad.length; i++) {
-        if (div_ad[i].querySelectorAll('[target=\'_blank\']').length >= 1) {
-            div_ad[i].style.height = '0px'
-        }
-    }
-  $.done({});
-} else if ($request.url.includes("argus/api/v1/assembly/toolbar")) {
-  var Q = JSON.parse($response.body);
-  Q.Data.Toolbar.Adv = {};
-  $done({body : JSON.stringify(Q)});
-}
+let html = $response.body
 
+if ($request.url.includes("missav.com")) {
+html = html.replace(/(<\/html>)/g, "") +
+`
+<script ${nonce}>
+setTimeout(
+() => {
+    document.querySelector("body").style.overflow = "auto"
+    document.querySelector(".MobileModal-wrapper").remove()
+
+    document.querySelectorAll(".RichContent-inner").forEach(item => {
+        item.style.maxHeight = "100%"
+        item.parentNode.removeAttribute("class")
+    })
+}
+,
+600
+)
+</script>
+</html>
+`
+
+$done({body: html})
+}
