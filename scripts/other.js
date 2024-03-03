@@ -4,10 +4,11 @@ if (!$response.body) $done({});
 let html = $response.body
 
 if ($request.url.includes("missav.com")) {
-    html = html.replace(/(<\/body><\/html>)/g, "") +
+    html = html.replace(/(<\/body>\n<\/html>)/g, "") +
     `
-    <script ${nonce}>
-    htmlAds = [];
+    <script type="text/javascript">
+        htmlAds = [];
+        htmlAdIndexes = [];
     </script>
     </body>
     </html>
