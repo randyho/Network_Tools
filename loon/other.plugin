@@ -8,7 +8,7 @@
 [Rewrite]
 # Pornhub(cn.pornhub.com)  
 ^https:\/\/(cn|www)\.pornhub\.com\/_xa\/ads.* url reject
-
+^https:\/\/missav\.com\/dm.* response-body-json-replace data.htmlAds {}
 
 [Script]
 http-response https:\/\/missav\.com\/dm.* response-body-json-replace data.htmlAds {}
