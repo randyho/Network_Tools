@@ -1,0 +1,543 @@
+# 需自行替换里面的订阅链接，如果没有备用机场，需删除备用订阅和策略
+
+# HTTP & SOCKS5 代理端口
+mixed-port: 7893
+
+# TProxy 代理端口
+tproxy-port: 7895
+
+# 规则模式：Rule（规则） / Global（全局代理）/ Direct（全局直连）
+mode: Rule
+
+# 设置日志输出级别 (默认级别：info）。
+# 5 个级别：silent / info / warning / error / debug。silent，即不输出任何内容,级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
+log-level: info
+
+# 是否启用 IPv6
+ipv6: false
+
+# 允许局域网的连接（可用来共享代理）
+allow-lan: false
+# bind-address: "*"
+# 此功能仅在 allow-lan 设置为 true 时生效，支持三种参数：
+# "*"                           绑定所有的 IP 地址
+# 192.168.122.11                绑定一个的 IPv4 地址
+# "[aaaa::a8aa:ff:fe09:57d8]"   绑定一个 IPv6 地址
+
+# Meta 内核特性 https://wiki.metacubex.one/config/general
+# 统一延迟
+# 更换延迟计算方式,去除握手等额外延迟
+unified-delay: true
+# TCP 并发
+# 同时对所有ip进行连接，返回延迟最低的地址
+tcp-concurrent: true
+
+# 进程匹配模式
+# 路由器上请设置为 off
+# always 开启，强制匹配所有进程
+# strict 默认，由 Clash 判断是否开启
+# off 不匹配进程，推荐在路由器上使用此模式
+find-process-mode: off
+
+# 全局客户端指纹
+global-client-fingerprint: chrome
+
+# 自定全局UA
+global-ua: chrome
+
+# clash 的 RESTful API
+external-controller: 0.0.0.0:9090
+
+# 缓存
+profile:
+  store-selected: true
+  # 储存 API 对策略组的选择，以供下次启动时使用
+  store-fake-ip: true
+  # 储存 fakeip 映射表，域名再次发生连接时，使用原有映射地址
+
+# 自动同步时间以防止时间不准导致无法正常联网
+ntp:
+  enable: true
+  # 是否同步至系统时间，需要 root/管理员权限
+  write-to-system: false
+  server: time.apple.com
+  port: 123
+  interval: 30
+
+# 实验性功能
+experimental:
+  ignore-resolve-fail: true # 忽略 DNS 解析失败，默认值为 true
+
+hosts:
+'mtalk.google.com': 108.177.125.188
+
+# 域名嗅探
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+  skip-domain:
+    - "Mijia Cloud"
+    - +.push.apple.com
+    - +.apple.com
+  # skip-src-address:
+  #   - 192.168.2.1/32
+  # skip-sdst-address:
+  #   - 192.168.2.1/32
+
+
+# 禁用 TUN
+tun:
+  enable: false
+  stack: system # gvisor/mixed
+  device: tun0
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-redirect: false
+  auto-detect-interface: true
+  
+
+# 如需要自定义DNS，请将 “enable” 处的 false 改为 true
+dns:
+  enable: true
+  prefer-h3: true
+  use-hosts: true
+  ipv6: false
+  listen: 0.0.0.0:1053
+  enhanced-mode: fake-ip # 或 redir-host
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:  # fake-ip 白名单列表
+    - '*.lan'
+    - '*.local'
+    - 'stun.*.*'
+    - 'stun.*.*.*'
+    - '+.stun.*.*'
+    - '+.stun.*.*.*'
+    - '+.stun.*.*.*.*'
+    - '+.stun.*.*.*.*.*'
+    - 'cable.auth.com'
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - 'network-test.debian.org'
+    - 'detectportal.firefox.com'
+    - 'localhost.*.qq.com'
+    - '+.cmpassport.com'
+    - 'id6.me'
+    - 'open.e.189.cn'
+    - 'mdn.open.wo.cn'
+    - 'auth.wosms.cn'
+    - '+.qq.com'
+    - '+.tencent.com'
+    - '+.boc.cn'
+    - '+.ccb.com'
+    - '+.ccb.com.cn'
+    - '+.cmbchina.com'
+    - '+.pingan.com.cn'
+    - '+.ninebot.com'
+    - geosite:private
+    - geosite:cn
+
+  default-nameserver:
+    - 119.29.29.29
+    - 223.5.5.5
+    # - 2400:3200::1
+    # - 2402:4e00::
+
+  nameserver:
+    # - https://doh.18bit.cn/dns-query
+    # - https://dns.yesdns.net/dns-query
+    - https://119.29.29.29/dns-query
+    - https://223.5.5.5/dns-query
+    - https://1.12.12.12/dns-query
+
+  nameserver-policy:
+    # "*": 127.0.0.1#lo
+    # "+.lan": 127.0.0.1#lo
+    # "+.local": 127.0.0.1#lo
+    'geosite:private,cn,geolocation-cn':
+      - https://119.29.29.29/dns-query
+      - https://223.5.5.5/dns-query
+      - https://1.12.12.12/dns-query
+    'rule-set:private_domain,cn_domain':
+      - https://119.29.29.29/dns-query
+      - https://223.5.5.5/dns-query
+      - https://1.12.12.12/dns-query
+    'geosite:geolocation-!cn':
+      - https://doh.18bit.cn/dns-query
+      - https://dns.yesdns.net/dns-query
+    # 'geosite:category-ads-all': rcode://success
+
+# YAML 锚点和引用功能，减少重复配置
+# 订阅及检测公共配置
+anchor-sub: &anchor-sub
+  type: http
+  # 自动更新订阅时间，单位为秒
+  interval: 604800
+  health-check:
+    enable: true
+    url: https://cp.cloudflare.com
+    # 节点连通性检测时间，单位为秒
+    interval: 3600
+    # 节点超时延迟，单位为毫秒
+    timeout: 1000
+    # 节点自动切换差值，单位为毫秒
+    tolerance: 20
+
+# 延迟检测公共配置  
+anchor-url: &anchor-url
+  type: url-test
+  url: http://www.gstatic.com/generate_204   # http://latency-test.skk.moe/endpoint
+  # 节点连通性检测时间，单位为秒
+  interval: 300
+  # 节点自动切换差值，单位为毫秒
+  tolerance: 20
+  lazy: false
+  # include-all: true  # 跟下方的use冲突
+  use:
+    - primary
+  
+# 规则订阅公共配置-IP类型
+anchor-ip: &anchor-ip 
+  type: http
+  interval: 86400
+  behavior: ipcidr
+  format: mrs
+
+# 规则订阅公共配置-域名类型
+anchor-domain: &anchor-domain
+  type: http
+  interval: 86400
+  behavior: domain
+  format: mrs
+
+
+# 服务器节点订阅
+# 对于订阅来说，path 为选填项，但建议启用
+# 本地配置可以只填 path
+proxy-providers:
+  primary:
+    <<: *anchor-sub
+    path: ./proxy_provider/primary.yaml
+    url: https://url.v1.mk/sub?target=clash&url=订阅地址
+    exclude-filter: 剩余|无法|套餐|官网|测试
+
+  backup:
+    <<: *anchor-sub
+    path: ./proxy_provider/backup.yaml
+    url: https://url.v1.mk/sub?target=clash&url=备用订阅地址
+    exclude-filter: 剩余|无法|套餐|官网|测试
+
+  # 本地配置:
+    # <<: *p
+    # path: ./proxy_provider/本地配置.yaml
+
+# 本地服务器列表
+proxies:
+
+
+proxy-groups:
+
+  # 地区优先
+  - name: 🐓 中国优先
+    type: select
+    hidden: true
+    proxies: &C
+      - DIRECT
+      - 🇭🇰 香港节点
+      - 🇸🇬 狮城节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇸 美国节点
+      - 🇦🇶 其他节点
+      - 🚀 倍速节点
+      - 🏴‍☠️ 备用机场
+  
+  - name: 🦁 坡县优先
+    type: select
+    hidden: true
+    proxies: &S
+      - 🇸🇬 狮城节点
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇸 美国节点
+      - DIRECT
+
+  - name: 🦅 美国优先
+    type: select
+    hidden: true
+    proxies: &A
+      - 🇺🇸 美国节点
+      - 🇯🇵 日本节点
+      - 🇸🇬 狮城节点
+      - 🇹🇼 台湾节点
+      - 🇭🇰 香港节点
+      - 🇦🇶 其他节点
+      - 🚀 倍速节点
+      - 🏴‍☠️ 备用机场
+      - DIRECT
+      
+  - name: 🐸 亚太优先
+    type: select
+    hidden: true
+    proxies: &G
+      - ✈️ 常用节点
+      - 🇦🇶 其他节点
+      - 🇭🇰 香港节点
+      - 🇸🇬 狮城节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇸 美国节点
+      - 🚀 倍速节点
+      - 🏴‍☠️ 备用机场
+      - DIRECT
+  
+  # 应用策略
+  - name: 🚫 AdBlock
+    type: select
+    proxies: &B
+      - REJECT
+      - DIRECT
+
+  - name: 📵 BlockOTA
+    type: select
+    proxies:
+      *B
+
+  # 中国直连优先
+  - name: 🍎 Apple
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
+    proxies:
+      *C
+
+  - name: 📹 Bilibili
+    type: select
+    proxies:
+      *C
+
+  - name: 🔎 Bing
+    type: select
+    proxies:
+      *C 
+      
+  # 新加坡节点优先
+  - name: Ⓜ️ Microsoft
+    type: select
+    proxies:
+      *S
+  - name: 🔍 Google
+    type: select
+    proxies:
+      *S
+  - name: 🔎 Copilot
+    type: select
+    proxies:
+      *S
+  - name: 📺 YouTube
+    type: select
+    proxies:
+      *S
+  - name: 🎬 Netflix
+    type: select
+    proxies:
+      *S
+  - name: 📲 Telegram
+    type: select
+    proxies:
+      *S
+
+  # 美国节点优先
+  - name: 🤖 AI
+    type: select
+    proxies:
+      *A
+
+  - name: 💳 PayPal
+    type: select
+    proxies:
+      *A
+
+  - name: 🎧 Spotify
+    type: select
+    proxies:
+      *A
+
+  - name: 🎥 Disney
+    type: select
+    proxies:
+      *A
+
+  - name: 📽 HBOMax
+    type: select
+    proxies:
+      *A
+
+  # 常用节点优先
+  - name: 🌎 国外网站
+    type: select
+    proxies:
+      *G
+
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      *G
+  
+  # 常用节点
+  - name: ✈️ 常用节点
+    <<: *anchor-url
+    filter: "(?i)^(.*(?:🇭🇰|🇸🇬|🇹🇼|🇯🇵|🇺🇸|港|hk|hongkong|新|sg|singapore|台|tw|taiwan|日|jp|japan|美|us|unitedstates)).*"
+    # exclude-filter: (?i)[4-9]x   # 剔除倍速节点
+
+  - name: 🚀 倍速节点
+    type: select
+    include-all: true
+    filter: (?i)[4-9]x
+ 
+  # 地区分组
+  - name: 🇭🇰 香港节点
+    <<: *anchor-url
+    filter: "(?i)港|hk|hongkong|hong kong"
+
+  - name: 🇸🇬 狮城节点
+    <<: *anchor-url
+    filter: "(?i)(新|sg|singapore)"
+    
+  - name: 🇹🇼 台湾节点
+    <<: *anchor-url
+    filter: "(?i)台|tw|taiwan"
+
+  - name: 🇯🇵 日本节点
+    <<: *anchor-url
+    filter: "(?i)日|jp|japan"
+
+  - name: 🇺🇸 美国节点
+    <<: *anchor-url
+    filter: "(?i)美|us|unitedstates|united states"
+  
+  - name: 🇦🇶 其他节点
+    <<: *anchor-url
+    # filter: (?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*
+    exclude-filter: (?i)🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates|[4-9]x
+
+  - name: 🏴‍☠️ 备用机场
+    type: select
+    use:
+      - backup
+
+
+rule-providers:
+
+  # 服务
+  MiTV:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdvertisingMiTV/AdvertisingMiTV.yaml
+    path: ./rule_provider/MiTV.yaml
+    interval: 604800
+
+  AppleOTA:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/SystemOTA/SystemOTA.yaml
+    path: ./rule_provider/SystemOTA.yaml
+    interval: 604800
+
+  Bing:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Bing/Bing.yaml
+    path: ./rule_provider/Bing.yaml
+    interval: 86400
+
+  Claude:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.yaml
+    path: ./rule_provider/Claude.yaml
+    interval: 604800
+
+  WeChat:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/WeChat/WeChat.yaml
+    path: ./rule_provider/WeChat.yaml
+    interval: 604800
+
+  private_domain:
+    <<: *anchor-domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"
+  cn_domain:
+    <<: *anchor-domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+  private_ip:
+    <<: *anchor-ip
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
+    
+
+rules:
+  # 直连
+  - RULE-SET,private_ip,DIRECT,no-resolve
+  - RULE-SET,private_domain,DIRECT
+
+  # 广告拦截
+  - GEOSITE,category-ads-all,🚫 AdBlock
+  - RULE-SET,MiTV,🚫 AdBlock
+
+  # 国外服务
+  - GEOSITE,apple,🍎 Apple
+  - GEOSITE,apple-cn,🍎 Apple
+  - GEOSITE,onedrive,DIRECT
+  - GEOSITE,microsoft@cn,DIRECT
+  - GEOSITE,Bing,🔎 Bing
+  - RULE-SET,Claude,🤖 AI
+  - GEOSITE,openai,🤖 AI
+  - GEOIP,google,🔍 Google
+  - GEOSITE,google,🔍 Google
+  - GEOSITE,google-cn,🔍 Google # Google CN 不走代理会导致香港等地区节点 Play Store 异常
+  - GEOSITE,paypal,💳 PayPal
+  - GEOSITE,spotify,🎧 Spotify
+  - GEOIP,telegram,📲 Telegram
+  - GEOSITE,telegram,📲 Telegram
+
+  # 流媒体
+  - GEOSITE,bilibili,📹 Bilibili
+  - GEOSITE,youtube,📺 YouTube
+  - GEOIP,netflix,🎬 Netflix
+  - GEOSITE,netflix,🎬 Netflix
+  - GEOSITE,disney,🎥 Disney
+  - GEOSITE,hbo,📽 HBOMax
+
+  # 国内直连
+  - RULE-SET,WeChat,DIRECT
+  - RULE-SET,cn_domain,DIRECT
+
+  # 国外兜底规则
+  - GEOSITE,geolocation-!cn,🌎 国外网站
+  
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+  - IP-CIDR,224.0.0.0/4,DIRECT,no-resolve
+  # - IP-CIDR,fe80::/10,DIRECT
+  - IP-CIDR,119.28.28.28/32,DIRECT
+  - IP-CIDR,182.254.116.0/24,DIRECT
+  # - RULE-SET,ChinaIP,DIRECT,no-resolve
+  - GEOIP,CN,DIRECT
+
+  - MATCH,🐟 漏网之鱼
