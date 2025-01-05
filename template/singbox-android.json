@@ -339,7 +339,7 @@
       "default": "🇭🇰 香港节点"
     },
     {
-      "tag": "📽 HBOMax",
+      "tag": "📽 HBO",
       "type": "selector",
       "outbounds": [
         "🇭🇰 香港节点",
@@ -455,7 +455,7 @@
       },
       {
         "rule_set": "geosite-hbo",
-        "outbound": "📽 HBOMax"
+        "outbound": "📽 HBO"
       },
       {
         "rule_set": "geosite-geolocation-!cn",
