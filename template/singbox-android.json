@@ -97,7 +97,7 @@
         }
       ],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "10m",
+      "interval": "30m",
       "tolerance": 20,
       "interrupt_exist_connections": false
     },
@@ -127,7 +127,7 @@
         }
       ],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "10m",
+      "interval": "30m",
       "tolerance": 20,
       "interrupt_exist_connections": false
     },
@@ -142,7 +142,7 @@
         }
       ],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "10m",
+      "interval": "30m",
       "tolerance": 20,
       "interrupt_exist_connections": false
     },
@@ -157,7 +157,7 @@
         }
       ],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "10m",
+      "interval": "30m",
       "tolerance": 20,
       "interrupt_exist_connections": false
     },
@@ -180,12 +180,12 @@
         {
           "action": "include",
           "keywords": [
-            "🇭🇰|🇸🇬|🇹🇼|🇯🇵|🇺🇸|港|HK|HongKong|新|SG|Singapore|台|TW|Taiwan|日|JP|Japan|美|US|Unitedstates"
+            "🇭🇰|🇸🇬|🇹🇼|🇯🇵|香港|HK|HongKong|新加坡|SG|Singapore|台湾|TW|Taiwan|日本|JP|Japan"
           ]
         }
       ],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "10m",
+      "interval": "30m",
       "tolerance": 20,
       "interrupt_exist_connections": false
     },
@@ -221,7 +221,6 @@
         "🇹🇼 台湾节点",
         "🇸🇬 新加坡节点",
         "🇦🇶 其他节点",
-        "🇭🇰 香港节点",
         "✈️ 常用节点"
       ],
       "default": "🇺🇸 美国节点"
@@ -287,14 +286,14 @@
       "tag": "🎵 TikTok",
       "type": "selector",
       "outbounds": [
+        "✈️ 常用节点",
         "🇺🇸 美国节点",
         "🇯🇵 日本节点",
         "🇹🇼 台湾节点",
         "🇸🇬 新加坡节点",
-        "🇦🇶 其他节点",
-        "✈️ 常用节点"
+        "🇦🇶 其他节点"        
       ],
-      "default": "🇺🇸 美国节点"
+      "default": "✈️ 常用节点"
     },
     {
       "tag": "📺 YouTube",
@@ -393,8 +392,8 @@
         "process_name": ["localsend", "localsend_app.exe"],
         "outbound": "DIRECT"
       },
-      { "clash_mode": "Direct", "outbound": "DIRECT" },
-      { "clash_mode": "Global", "outbound": "🌎 Global" },
+      { "clash_mode": "direct", "outbound": "DIRECT" },
+      { "clash_mode": "global", "outbound": "🌎 Global" },
       {
         "domain": [
           "clash.razord.top",
@@ -481,7 +480,7 @@
         "tag": "geosite-ai",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/ai.mrs",
+        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ai.srs",
         "download_detour": "DIRECT"
       },
       {
