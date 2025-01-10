@@ -83,126 +83,6 @@
     }
   ],
   "outbounds": [
-    { "tag": "dns-out", "type": "dns" },
-    { "tag": "REJECT", "type": "block" },
-    { "tag": "DIRECT", "type": "direct" },
-    {
-      "tag": "🇭🇰 香港节点",
-      "type": "urltest",
-      "outbounds": ["{all}"],
-      "filter": [
-        {
-          "action": "include",
-          "keywords": ["🇭🇰|香港|HK|Hong Kong"]
-        }
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "30m",
-      "tolerance": 20,
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "🇸🇬 新加坡节点",
-      "type": "urltest",
-      "outbounds": ["{all}"],
-      "filter": [
-        {
-          "action": "include",
-          "keywords": ["🇸🇬|新加坡|SG|Singapore"]
-        }
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "10m",
-      "tolerance": 20,
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "🇹🇼 台湾节点",
-      "type": "urltest",
-      "outbounds": ["{all}"],
-      "filter": [
-        {
-          "action": "include",
-          "keywords": ["🇹🇼|台湾|TW|Taiwan"]
-        }
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "30m",
-      "tolerance": 20,
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "🇯🇵 日本节点",
-      "type": "urltest",
-      "outbounds": ["{all}"],
-      "filter": [
-        {
-          "action": "include",
-          "keywords": ["🇯🇵|日本|JP|Japan"]
-        }
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "30m",
-      "tolerance": 20,
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "🇺🇸 美国节点",
-      "type": "urltest",
-      "outbounds": ["{all}"],
-      "filter": [
-        {
-          "action": "include",
-          "keywords": ["🇺🇸|美国|US|USA|United States"]
-        }
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "30m",
-      "tolerance": 20,
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "🇦🇶 其他节点",
-      "type": "selector",
-      "outbounds": ["{all}"],
-      "filter": [
-        {
-          "action": "exclude",
-          "keywords": ["🇭🇰|🇸🇬|🇹🇼|🇯🇵|🇺🇸|港|HK|HongKong|新|SG|Singapore|台|TW|Taiwan|日|JP|Japan|美|US|Unitedstates"]
-        }
-      ]
-    },
-    {
-      "tag": "✈️ 常用节点",
-      "type": "urltest",
-      "outbounds": ["{all}"],
-      "filter": [
-        {
-          "action": "include",
-          "keywords": [
-            "🇭🇰|🇸🇬|🇹🇼|🇯🇵|香港|HK|HongKong|新加坡|SG|Singapore|台湾|TW|Taiwan|日本|JP|Japan"
-          ]
-        }
-      ],
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "30m",
-      "tolerance": 20,
-      "interrupt_exist_connections": false
-    },
-    {
-      "tag": "📌 手动选择",
-      "type": "selector",
-      "outbounds": ["{all}"],
-      "filter": [
-        {
-          "action": "exclude",
-          "keywords": [
-            "剩余|流量|raffic|有效|时间|到期|xpire|地址|网址|官网|自动|最优|最快"
-          ]
-        }
-      ],
-      "interrupt_exist_connections": true
-    },
     {
       "tag": "🚫 AdBlock",
       "type": "selector",
@@ -364,7 +244,127 @@
         "🇦🇶 其他节点"
       ],
       "default": "✈️ 常用节点"
-    }
+    },
+    {
+      "tag": "✈️ 常用节点",
+      "type": "urltest",
+      "outbounds": ["{all}"],
+      "filter": [
+        {
+          "action": "include",
+          "keywords": [
+            "🇭🇰|🇸🇬|🇹🇼|🇯🇵|香港|HK|HongKong|新加坡|SG|Singapore|台湾|TW|Taiwan|日本|JP|Japan"
+          ]
+        }
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "30m",
+      "tolerance": 20,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇭🇰 香港节点",
+      "type": "urltest",
+      "outbounds": ["{all}"],
+      "filter": [
+        {
+          "action": "include",
+          "keywords": ["🇭🇰|香港|HK|Hong Kong"]
+        }
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "30m",
+      "tolerance": 20,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇸🇬 新加坡节点",
+      "type": "urltest",
+      "outbounds": ["{all}"],
+      "filter": [
+        {
+          "action": "include",
+          "keywords": ["🇸🇬|新加坡|SG|Singapore"]
+        }
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "10m",
+      "tolerance": 20,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇹🇼 台湾节点",
+      "type": "urltest",
+      "outbounds": ["{all}"],
+      "filter": [
+        {
+          "action": "include",
+          "keywords": ["🇹🇼|台湾|TW|Taiwan"]
+        }
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "30m",
+      "tolerance": 20,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇯🇵 日本节点",
+      "type": "urltest",
+      "outbounds": ["{all}"],
+      "filter": [
+        {
+          "action": "include",
+          "keywords": ["🇯🇵|日本|JP|Japan"]
+        }
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "30m",
+      "tolerance": 20,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇺🇸 美国节点",
+      "type": "urltest",
+      "outbounds": ["{all}"],
+      "filter": [
+        {
+          "action": "include",
+          "keywords": ["🇺🇸|美国|US|USA|United States"]
+        }
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "30m",
+      "tolerance": 20,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇦🇶 其他节点",
+      "type": "selector",
+      "outbounds": ["{all}"],
+      "filter": [
+        {
+          "action": "exclude",
+          "keywords": ["🇭🇰|🇸🇬|🇹🇼|🇯🇵|🇺🇸|港|HK|HongKong|新|SG|Singapore|台|TW|Taiwan|日|JP|Japan|美|US|Unitedstates"]
+        }
+      ]
+    },
+    {
+      "tag": "📌 手动选择",
+      "type": "selector",
+      "outbounds": ["{all}"],
+      "filter": [
+        {
+          "action": "exclude",
+          "keywords": [
+            "剩余|流量|raffic|有效|时间|到期|xpire|地址|网址|官网|自动|最优|最快"
+          ]
+        }
+      ],
+      "interrupt_exist_connections": true
+    },
+    { "tag": "dns-out", "type": "dns" },
+    { "tag": "REJECT", "type": "block" },
+    { "tag": "DIRECT", "type": "direct" }
   ],
   "route": {
     "auto_detect_interface": true,
