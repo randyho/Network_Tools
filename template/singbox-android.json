@@ -97,9 +97,10 @@
       "type": "selector",
       "outbounds": [
         "🇺🇸 美国节点",
+        "🇬🇧 英国节点",
         "🇯🇵 日本节点",
         "🇹🇼 台湾节点",
-        "🇸🇬 新加坡节点",
+        "🇸🇬 新加坡节点",        
         "🇦🇶 其他节点",
         "✈️ 常用节点"
       ],
@@ -138,11 +139,11 @@
       "tag": "📲 Telegram",
       "type": "selector",
       "outbounds": [
-        "🇭🇰 香港节点",
         "🇸🇬 新加坡节点",
         "🇹🇼 台湾节点",
         "🇯🇵 日本节点",
         "🇺🇸 美国节点",
+         "🇭🇰 香港节点",
         "🇦🇶 其他节点",
         "✈️ 常用节点"
       ],
@@ -165,15 +166,14 @@
     {
       "tag": "🎵 TikTok",
       "type": "selector",
-      "outbounds": [
-        "✈️ 常用节点",
-        "🇺🇸 美国节点",
+      "outbounds": [       
         "🇯🇵 日本节点",
         "🇹🇼 台湾节点",
         "🇸🇬 新加坡节点",
+        "🇺🇸 美国节点",
         "🇦🇶 其他节点"        
       ],
-      "default": "✈️ 常用节点"
+      "default": "🇯🇵 日本节点"
     },
     {
       "tag": "📺 YouTube",
@@ -230,6 +230,16 @@
         "✈️ 常用节点"
       ],
       "default": "🇭🇰 香港节点"
+    },
+    {
+      "tag": "🛜 Wifi-Calling",
+      "type": "selector",
+      "outbounds": [
+        "🇬🇧 英国节点",
+        "🇺🇸 美国节点",
+        "🇦🇶 其他节点"
+      ],
+      "default": "🇬🇧 英国节点"
     },
     {
       "tag": "🌎 Global",
@@ -330,6 +340,21 @@
         {
           "action": "include",
           "keywords": ["🇺🇸|美国|US|USA|United States"]
+        }
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "30m",
+      "tolerance": 20,
+      "interrupt_exist_connections": false
+    },
+    {
+      "tag": "🇬🇧 英国节点",
+      "type": "urltest",
+      "outbounds": ["{all}"],
+      "filter": [
+        {
+          "action": "include",
+          "keywords": ["🇬🇧|英国|UK"]
         }
       ],
       "url": "https://www.gstatic.com/generate_204",
@@ -457,6 +482,10 @@
         "outbound": "📽 HBO"
       },
       {
+        "rule_set": "geosite-wifi-calling",
+        "outbound": "🛜 Wifi-Calling"
+      },
+      {
         "rule_set": "geosite-geolocation-!cn",
         "outbound": "🌎 Global"
       },
@@ -565,6 +594,13 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/hbo.srs",
+        "download_detour": "DIRECT"
+      },
+      {
+        "tag": "geosite-wifi-calling",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/randyho/Network_Tools/refs/heads/main/rule/UK-wifi-call.json",
         "download_detour": "DIRECT"
       },
       {
