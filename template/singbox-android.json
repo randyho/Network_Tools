@@ -39,12 +39,12 @@
         "rewrite_ttl": 3600
       },
       {
-        "rule_set": "geosite-cn",
+        "geosite": "cn",
         "server": "dns_direct",
         "rewrite_ttl": 3600
       },
       {
-        "rule_set": "geolocation-!cn",
+        "geosite": "geolocation-!cn",
         "server": "dns_proxy",
         "rewrite_ttl": 3600
       }
