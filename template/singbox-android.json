@@ -14,6 +14,10 @@
       "external_ui_download_detour": "DIRECT",
       "secret": "",
       "default_mode": "rule"
+    },
+    "cache_file": {
+      "enabled": true,
+      "store_rdrc": true
     }
   },
   "dns": {
@@ -25,32 +29,37 @@
     "rules": [
       {
         "outbound": "any",
+        "action": "route",
         "server": "dns_direct",
         "rewrite_ttl": 3600
       },
       {
         "clash_mode": "direct",
+        "action": "route",
         "server": "dns_direct",
         "rewrite_ttl": 3600
       },
       {
         "clash_mode": "global",
+        "action": "route",
         "server": "dns_proxy",
         "rewrite_ttl": 3600
       },
       {
         "rule_set": "geosite-cn",
+        "action": "route",
         "server": "dns_direct",
         "rewrite_ttl": 3600
       },
       {
         "rule_set": "geosite-geolocation-!cn",
+        "action": "route",
         "server": "dns_proxy",
         "rewrite_ttl": 3600
       }
     ],
     "final": "dns_proxy",
-    "strategy": "ipv4_only",
+    "strategy": "prefer_ipv4",
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": false,
@@ -59,12 +68,11 @@
 "inbounds": [
     {
       "type": "tun",
-      "address": "172.19.0.1/30",
+      "tag": "tun-in",
+      "address": ["172.18.0.1/30", "fdfe:dcba:9876::1/126"],
       "mtu": 9000,
       "auto_route": true,
       "strict_route": true,
-      "sniff": true,
-      "sniff_override_destination": false,
       "endpoint_independent_nat": false,
       "stack": "system",
       "exclude_package": [
@@ -81,10 +89,9 @@
     },
     {
       "type": "mixed",
-      "listen": "127.0.0.1",
-      "listen_port": 7890,
-      "sniff": true,
-      "sniff_override_destination": false
+      "tag": "mixed-in",
+      "listen": "::",
+      "listen_port": 7890
     }
   ],
   "outbounds": [
@@ -401,29 +408,35 @@
     "override_android_vpn": true,
     "final": "🌎 Global",
     "rules": [
+       {
+        "inbound": ["mixed-in", "tun-in"],
+        "action": "sniff"
+      },
       {
         "type": "logical",
         "mode": "or",
         "rules": [
           {
-            "port": 53
+            "protocol": "dns"
           },
           {
-            "protocol": "dns"
+            "port": 53
           }
         ],
-        "outbound": "dns-out"
+        "action": "hijack-dns"
       },
       {
         "ip_is_private": true,
+        "action": "route",
         "outbound": "DIRECT"
       },
       {
         "process_name": ["localsend", "localsend_app.exe"],
+        "action": "route",
         "outbound": "DIRECT"
       },
-      { "clash_mode": "direct", "outbound": "DIRECT" },
-      { "clash_mode": "global", "outbound": "🌎 Global" },
+      { "clash_mode": "direct", "action": "route", "outbound": "DIRECT" },
+      { "clash_mode": "global", "action": "route", "outbound": "🌎 Global" },
       {
         "domain": [
           "clash.razord.top",
@@ -431,18 +444,22 @@
           "yacd.haishan.me",
           "d.metacubex.one"
         ],
+        "action": "route",
         "outbound": "DIRECT"
       },
       {
         "rule_set": "geosite-category-ads-all",
+        "action": "route",
         "outbound": "🚫 AdBlock"
       },
       {
         "rule_set": "geosite-ai",
+        "action": "route",
         "outbound": "🤖 AI"
       },
       {
         "rule_set": "geosite-microsoft",
+        "action": "route",
         "outbound": "Ⓜ️ Microsoft"
       },
       {
@@ -450,6 +467,7 @@
           "geoip-google",
           "geosite-google"
         ],
+        "action": "route",
         "outbound": "🔍 Google"
       },
       {
@@ -457,18 +475,22 @@
           "geoip-telegram",
           "geosite-telegram"
         ],
+        "action": "route",
         "outbound": "📲 Telegram"
       },
       {
         "rule_set": "geosite-spotify",
+        "action": "route",
         "outbound": "🎧 Spotify"
       },
       {
         "rule_set": "geosite-tiktok",
+        "action": "route",
         "outbound": "🎵 TikTok"
       },
       {
         "rule_set": "geosite-youtube",
+        "action": "route",
         "outbound": "📺 YouTube"
       },
       {
@@ -476,22 +498,27 @@
           "geoip-netflix",
           "geosite-netflix"
         ],
+        "action": "route",
         "outbound": "🎬 Netflix"
       },
       {
         "rule_set": "geosite-disney",
+        "action": "route",
         "outbound": "🎥 Disney"
       },
       {
         "rule_set": "geosite-hbo",
+        "action": "route",
         "outbound": "📽 HBO"
       },
       {
         "rule_set": "geosite-wifi-calling",
+        "action": "route",
         "outbound": "🛜 Wifi-Calling"
       },
       {
         "rule_set": "geosite-geolocation-!cn",
+        "action": "route",
         "outbound": "🌎 Global"
       },
       {
@@ -499,6 +526,7 @@
           "geoip-cn",
           "geosite-cn"
         ],
+        "action": "route",
         "outbound": "DIRECT"
       }
     ],
@@ -508,126 +536,144 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-ai",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ai.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-microsoft",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geoip-google",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/google.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-google",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geoip-telegram",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-telegram",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-spotify",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/spotify.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-tiktok",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tiktok.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-youtube",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geoip-netflix",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/netflix.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-netflix",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/netflix.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-disney",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/disney.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-hbo",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/hbo.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-wifi-calling",
         "type": "remote",
         "format": "source",
         "url": "https://raw.githubusercontent.com/randyho/Network_Tools/refs/heads/main/rule/UK-wifi-call.json",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-geolocation-!cn",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geoip-cn",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       },
       {
         "tag": "geosite-cn",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
-        "download_detour": "DIRECT"
+        "download_detour": "DIRECT",
+        "update_interval": "3d"
       }
     ]
   }
