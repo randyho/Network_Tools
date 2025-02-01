@@ -50,11 +50,21 @@
         "server": "dns_direct",
         "rewrite_ttl": 3600
       },
+      ,
       {
-        "rule_set": "geosite-geolocation-!cn",
-        "action": "route",
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geosite_geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": "geoip_cn"
+          }
+        ],
         "server": "dns_proxy",
-        "rewrite_ttl": 3600
+        "client_subnet": "1.2.4.8/24"
       }
     ],
     "final": "dns_proxy",
