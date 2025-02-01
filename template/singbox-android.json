@@ -55,11 +55,11 @@
         "mode": "and",
         "rules": [
           {
-            "rule_set": "geosite_geolocation-!cn",
+            "rule_set": "geosite-geolocation-!cn",
             "invert": true
           },
           {
-            "rule_set": "geoip_cn"
+            "rule_set": "geoip-cn"
           }
         ],
         "server": "dns_proxy",
