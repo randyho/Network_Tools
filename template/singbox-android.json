@@ -399,6 +399,10 @@
         }
       ],
       "interrupt_exist_connections": true
+    },
+    {
+      "type": "direct",
+      "tag": "🇨🇳 国内直连"
     }
   ],
   "route": {
