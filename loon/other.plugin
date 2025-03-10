@@ -7,9 +7,9 @@
 
 
 [Rule]
-DOMAIN-SUFFIX,creative.myavlive.com,REJECT
-DOMAIN-SUFFIX,trackwilltrk.com,REJECT
-DOMAIN-SUFFIX,tsyndicate.com,REJECT
+# DOMAIN-SUFFIX,creative.myavlive.com,REJECT
+# DOMAIN-SUFFIX,trackwilltrk.com,REJECT
+# DOMAIN-SUFFIX,tsyndicate.com,REJECT
 
 [Rewrite]
 # Pornhub(cn.pornhub.com)  
