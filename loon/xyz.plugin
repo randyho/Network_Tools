@@ -1,0 +1,21 @@
+#!name = 小宇宙去广告
+#!desc = 屏蔽小宇宙广告和AI
+#!author = Randy
+#!update = 2025-05-05 18:35
+#!homepage = https://github.com/randyho/Network_Tools
+#!icon = https://raw.githubusercontent.com/randyho/Network_Tools/main/icon/Futunn.png
+
+[Rewrite]
+# 开屏广告
+^https:\/\/api\.xiaoyuzhoufm\.com\/v1\/flash-screen\/list reject-dict
+
+# 移除ai总结
+^https:\/\/api\.xiaoyuzhoufm\.com\/v1\/ai-summary reject-dict
+# 会员横幅设为不可点击
+^https:\/\/api\.xiaoyuzhoufm\.com\/v1\/membership\/platform reject-dict
+# 移除小宇宙搜索框内容
+^https?:\/\/api\.xiaoyuzhoufm\.com\/v1\/search reject-dict
+^https?:\/\/api\.xiaoyuzhoufm\.com\/v1\/category\/list-daily-suggestion reject-dict
+
+[Mitm]
+hostname = api.xiaoyuzhoufm.com
