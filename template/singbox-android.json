@@ -29,7 +29,7 @@
       },
       {
         "tag": "dns_proxy",
-        "address": "https://101.101.101.101/dns-query",
+        "address": "https://8.8.8.8/dns-query",
         "address_resolver": "dns_direct",
         "detour": "🇨🇳 国内直连"
       }
