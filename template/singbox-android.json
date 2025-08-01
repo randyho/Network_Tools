@@ -5,19 +5,16 @@
   },
   "experimental": {
     "cache_file": {
-      "enabled": true
+      "enabled": true,
+      "store_rdrc": true
     },
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
       "external_ui": "ui",
-      "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
-      "external_ui_download_detour": "DIRECT",
+      "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
+      "external_ui_download_detour": "✈️ 常用节点",
       "secret": "",
       "default_mode": "rule"
-    },
-    "cache_file": {
-      "enabled": true,
-      "store_rdrc": true
     }
   },
   "dns": {
@@ -29,7 +26,7 @@
       },
       {
         "tag": "dns_proxy",
-        "address": "https://8.8.8.8/dns-query",
+        "address": "https://1.1.1.1/dns-query",
         "address_resolver": "dns_direct",
         "detour": "🇨🇳 国内直连"
       }
@@ -78,7 +75,7 @@
     {
       "type": "tun",
       "tag": "tun-in",
-      "mtu": 9000,
+      "interface_name": "singbox_tun",
       "address": [
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
@@ -673,18 +670,5 @@
     "final": "🌎 Global",
     "auto_detect_interface": true,
     "override_android_vpn": true
-  },
-  "experimental": {
-    "cache_file": {
-      "enabled": true,
-      "store_rdrc": true
-    },
-    "clash_api": {
-      "external_controller": "127.0.0.1:9090",
-      "external_ui": "ui",
-      "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
-      "external_ui_download_detour": "✈️ 常用节点",
-      "default_mode": "rule"
-    }
   }
 }
