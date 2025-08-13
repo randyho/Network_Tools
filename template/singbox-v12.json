@@ -21,12 +21,12 @@
       {
         "tag": "dns_direct",
         "type": "https",
-        "address": "223.5.5.5"
+        "server": "223.5.5.5"
       },
       {
         "tag": "dns_proxy",
         "type": "https",
-        "address": "1.1.1.1",
+        "server": "1.1.1.1",
         "detour": "✈️ 常用节点"
       }
     ],
