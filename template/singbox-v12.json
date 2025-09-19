@@ -384,7 +384,7 @@
         "type": "remote",
         "tag": "geosite-microsoft",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs",
+        "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Microsoft/Microsoft.srs",
         "download_detour": "✈️ 常用节点",
         "update_interval": "72h0m0s"
       },
