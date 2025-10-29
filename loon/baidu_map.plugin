@@ -5,33 +5,29 @@
 #!homepage = https://github.com/randyho/Network_Tools
 #!icon = https://raw.githubusercontent.com/randyho/Network_Tools/main/icon/baidu_map.png
 
+[Argument]
+bdduditu_enable = switch,true,false,tag=百度地图-脚本开关
+
 [Rule]
+DOMAIN, afd.baidu.com, REJECT
+DOMAIN, afdconf.baidu.com, REJECT
 DOMAIN, httpdns.baidubce.com, REJECT
-DOMAIN, httpsdns.baidubce.com, REJECT
-IP-CIDR, 180.76.76.112/32, REJECT, no-resolve
-IP-CIDR, 180.76.76.200/32, REJECT, no-resolve
+DOMAIN, lc.map.baidu.com, REJECT
+# IP-CIDR, 180.76.76.112/32, REJECT, no-resolve
+# IP-CIDR, 180.76.76.200/32, REJECT, no-resolve
 
 [Rewrite]
-^https:\/\/afd\.map\.baidu\.com\/afd\/entry\?action=(update|query) reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/feed\/govui\/rich_content response-body-json-del data
+^https?:\/\/dss0\.bdstatic\.com\/-0U0bnSm1A5BphGlnYG\/ reject-200
+^https?:\/\/dss0\.bdstatic\.com\/.+/tam-ogel\/.+\.(jpg|mp4) reject
+^https?:\/\/tb1\.bdstatic\.com\/tb\/cms\/ngmis\/adsense\/*.jpg reject
+^https?:\/\/tb2\.bdstatic\.com\/tb\/mobile\/spb\/widget\/jump reject-img
+^https?:\/\/ss0\.bdstatic\.com/.+?_\d{3}_\d{4}\.jpg reject-200
+^https?:\/\/gss0\.bdstatic\.com\/.+?\/static\/wiseindex\/img\/bd_red_packet\.png reject-img
 # 小横条
 ^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\?  response-body-json-del content.multi_data
-# 我的页面
-#^https:\/\/newclient\.map\.baidu\.com\/client\/usersystem\/home\/dynamic reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/(client\/)?usersystem\/mine\/page\? response-body-json-replace data {}
-# 开屏广告 路线banner广告
-^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2.*qt=ads&type=user_home_new_service response-body-json-del ads
-# 打车页
-^https:\/\/yongche\.baidu\.com\/gomarketing\/api\/popup\/getentrancecordovaurl$ reject-dict
-^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/cobuild\/pull\? reject-dict
-^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/operationgirdle$ reject-dict
-^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/baseinfo$ reject-dict
-^https:\/\/yongche\.baidu\.com\/goorder\/passenger\/notice reject-dict
-# 其他
-^https:\/\/ecom\.map\.baidu\.com\/ad-ops\/afd\/popup\? reject-dict
-^https:\/\/maphotel\.map\.baidu\.com\/hotel\/goextranet\/activity\/detail\? reject-dict
-^https:\/\/newclient\.map\.baidu\.com\/living\/nearby\/api\? response-body-json-del Result.cards[1] Result.cards[4] Result.cards[5] Result.cards[9]
 
-[Mitm]
-hostname = afd.baidu.com,newclient.map.baidu.com,yongche.baidu.com,ecom.map.baidu.com,ugc.map.baidu.com
-#,163.177.17.*,14.215.182.*
+[Script]
+http-response ^https?:\/\/newclient\.map\.baidu\.com\/client\/phpui2\/\?qt=ads script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/baidumap.js, requires-body=true, timeout=60, tag=百度地图广告, enable=
+
+[MITM]
+hostname = dss0.bdstatic.com, tb1.bdstatic.com, tb2.bdstatic.com, ss0.bdstatic.com, gss0.bdstatic.com, newclient.map.baidu.com
