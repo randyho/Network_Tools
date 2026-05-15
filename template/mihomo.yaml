@@ -1,11 +1,8 @@
 # HTTP & SOCKS5 代理端口
-mixed-port: 7890
-
-# TProxy 代理端口
-tproxy-port: 7895
+mixed-port: 7897
 
 # 规则模式：Rule（规则） / Global（全局代理）/ Direct（全局直连）
-mode: Rule
+mode: rule
 
 # 设置日志输出级别 (默认级别：info）。
 # 5 个级别：silent / info / warning / error / debug。silent，即不输出任何内容,级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
@@ -15,8 +12,8 @@ log-level: info
 ipv6: false
 
 # 允许局域网的连接（可用来共享代理）
-allow-lan: true
-bind-address: "*"
+allow-lan: false
+# bind-address: "*"
 # 此功能仅在 allow-lan 设置为 true 时生效，支持三种参数：
 # "*"                           绑定所有的 IP 地址
 # 192.168.122.11                绑定一个的 IPv4 地址
@@ -35,16 +32,35 @@ tcp-concurrent: true
 # always 开启，强制匹配所有进程
 # strict 默认，由 Clash 判断是否开启
 # off 不匹配进程，推荐在路由器上使用此模式
-find-process-mode: off
-
-# 全局客户端指纹
-global-client-fingerprint: chrome
+find-process-mode: strict
 
 # 自定全局UA
 global-ua: chrome
 
 # clash 的 RESTful API
-external-controller: 0.0.0.0:9090
+external-controller: 127.0.0.1:9090
+
+# GEOIP 数据模式
+# 更改 geoip 使用文件，mmdb 或者 dat，可选 true/false,true为 dat，此项有默认值 false
+geodata-mode: true
+
+# 自动更新 GEO
+geo-auto-update: true
+# 更新间隔，单位为小时
+geo-update-interval: 24
+
+# Geo 数据库下载地址
+# 使用 FastGit 代理 (https://fgit.cf)
+# 源地址 https://github.com/MetaCubeX/meta-rules-dat
+# 可以更换镜像站但不要更换其他数据库，可能导致无法启动
+geox-url:
+  geoip: https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
+  geosite: https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
+  mmdb: https://github.com/Loyalsoldier/geoip@release/Country-without-asn.mmdb
+  asn: https://github.com/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb
+  # mmdb: https://gitlab.com/Masaiki/GeoIP2-CN/-/raw/release/Country.mmdb
+  # asn: https://gitlab.com/Loon0x00/loon_data/-/raw/main/geo/GeoLite2-ASN.mmdb
+
 
 # 缓存
 profile:
@@ -52,7 +68,7 @@ profile:
   # 储存 API 对策略组的选择，以供下次启动时使用
   store-fake-ip: true
   # 储存 fakeip 映射表，域名再次发生连接时，使用原有映射地址
-
+  
 # 自动同步时间以防止时间不准导致无法正常联网
 ntp:
   enable: false
@@ -61,11 +77,14 @@ ntp:
   server: time.apple.com
   port: 123
   interval: 30
-
+  
 # 实验性功能
 experimental:
   ignore-resolve-fail: true # 忽略 DNS 解析失败，默认值为 true
 
+# # 实验性功能 hosts, 支持通配符 (例如 *.clash.dev 甚至 *.foo.*.example.com)
+# # 静态的域名 比 通配域名 具有更高的优先级 (foo.example.com 优先于 *.example.com)
+# 注意: +.foo.com 的效果等同于 .foo.com 和 foo.com
 hosts:
 'mtalk.google.com': 108.177.125.188
 
@@ -73,8 +92,8 @@ hosts:
 sniffer:
   enable: true
   force-dns-mapping: true
-  parse-pure-ip: true         # 对所有未获取到域名的流量进行强制嗅探
-  override-destination: true  # 是否使用嗅探结果作为实际访问
+  parse-pure-ip: true
+  override-destination: true
   sniff:
     HTTP:
       ports: [80, 8080-8880]
@@ -86,47 +105,43 @@ sniffer:
   force-domain:
     - +.v2ex.com
   skip-domain:
-    - 'Mijia Cloud'
-    - '+.push.apple.com'
-    - '+.vivox.com'
-    - '+.oray.com'
-    - '+.sunlogin.net'
-    # - 'rule-set:Tencent'
-    # - 'rule-set:cn_domain'
+    - "Mijia Cloud"
+    - '+.apple.com'  
+    - '+.icloud.com'  
+    - '+.wechat.com'  
+    - '+.qpic.cn'  
+    - '+.qq.com'  
+    - '+.wechatapp.com'  
+    - '+.vivox.com'  
+    - '+.oray.com'  
+    - '+.sunlogin.net'  
 
 # 禁用 TUN
 tun:
   enable: false
-  stack: system # system/gvisor/mixed
-  device: tun0
+  stack: system # gvisor/mixed
   dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
+    - 'any:53'
   auto-route: true
-  auto-redirect: false
   auto-detect-interface: true
   
-
-# 如需要自定义DNS，请将 “enable” 处的 false 改为 true
+# 如需要自定义DNS，请将 enable 处的 false 改为 true
 dns:
   enable: true
   ipv6: false
   prefer-h3: true
   use-hosts: true
-  respect-rules: false
+  use-system-hosts: true
   skip-cert-verify: true
+  respect-rules: true 
   listen: 0.0.0.0:1053
-  enhanced-mode: fake-ip # fake-ip 或 redir-host
+  enhanced-mode: fake-ip # 或 redir-host
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:  # fake-ip 白名单列表
+    - rule-set:China
     - '*.lan'
-    - '*.local'
-    - 'stun.*'
-    - '+.ntp.org.cn'
-    - '+.pool.ntp.org'
     - '+.msftncsi.com'
     - '+.msftconnecttest.com'
-    - 'network-test.debian.org'
     - 'detectportal.firefox.com'
     - 'localhost.*.qq.com'
     - '+.cmpassport.com'
@@ -152,42 +167,39 @@ dns:
     # - geosite:private
     # - geosite:cn
 
+  # 用于解析 nameserver，fallback 以及其他 DNS 服务器配置的，DNS 服务域名
+  # 只能使用纯 IP 地址，可使用加密 DNS
   default-nameserver:
     - system
-    - 223.5.5.5      # 阿里
-    - 180.184.1.1    # 火山
-    # - 180.76.76.76   # 百度
-    # - 123.125.81.6   # 360
-
+    - tls://223.5.5.5:853
+    - tls://119.29.29.29:853
+    - system # append DNS server from system configuration. If not found, it would print an error log and skip.
+    
+  # 默认的域名解析服务器，设置为境外DNS，境内的优先使用下面nameserver-policy配置
   nameserver:
-    - https://223.5.5.5/dns-query
-    - https://1.12.12.12/dns-query
-    # - https://doh.360.cn/dns-query
+    - https://dns.cloudflare.com/dns-query
+    - https://sky.rethinkdns.com/dns-query
+    - https://doh.18bit.cn/dns-query
+    # - https://8.8.8.8/dns-query             # Google
+    # - https://1.1.1.1/dns-query             # Cloudflare
     
   proxy-server-nameserver:
-    - https://doh.18bit.cn/dns-query
-    - https://101.101.101.101/dns-query
-    - https://doh-sg.blahdns.com/dns-query
-  
-  # direct-nameserver:
-  #   - system
-  # direct-nameserver-follow-policy: false
-      
+    - tls://223.5.5.5:853
+    - tls://119.29.29.29:853
+    
+  # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
   nameserver-policy:
-    # "*": 127.0.0.1#lo
-    # "+.lan": 127.0.0.1#lo
-    # "+.local": 127.0.0.1#lo
-    'rule-set:cn_domain,99weiqi,Tencent,China':
-      - https://223.5.5.5/dns-query
-      - https://1.12.12.12/dns-query
-    'geosite:private,cn,geolocation-cn':
-      - https://223.5.5.5/dns-query
-      - https://1.12.12.12/dns-query
-    'geosite:geolocation-!cn':
-      - https://doh.18bit.cn/dns-query
-      - https://101.101.101.101/dns-query
-      - https://doh-sg.blahdns.com/dns-query
-    # 'geosite:category-ads-all': rcode://success
+    'rule-set:LocalCom,LAN':          
+      - system                             # 公司DNS
+    'geosite:cn,private':
+      - https://dns.alidns.com/dns-query   # 阿里DoH
+      - https://doh.360.cn/dns-query       # 360 DoH
+      - https://doh.pub/dns-query          # 腾讯DoH
+    'rule-set:China':
+      - https://dns.alidns.com/dns-query   # 阿里DoH
+      - https://doh.360.cn/dns-query       # 360 DoH
+      - https://doh.pub/dns-query          # 腾讯DoH
+
 
 # YAML 锚点和引用功能，减少重复配置
 # 订阅及检测公共配置
@@ -195,6 +207,7 @@ anchor-sub: &anchor-sub
   type: http
   # 自动更新订阅时间，单位为秒
   interval: 604800
+  # proxy: ✈️ 常用节点
   health-check:
     enable: true
     url: https://cp.cloudflare.com
@@ -205,49 +218,59 @@ anchor-sub: &anchor-sub
     # 节点自动切换差值，单位为毫秒
     tolerance: 20
 
-# 延迟检测公共配置  
-anchor-url: &anchor-url
+# 节点延迟检测公共配置  
+anchor-proxy: &anchor-proxy
   type: url-test
-  url: http://www.gstatic.com/generate_204   # http://latency-test.skk.moe/endpoint
+  lazy: false
+  disable-udp: false
   # 节点连通性检测时间，单位为秒
-  interval: 300
+  interval: 600
   # 节点自动切换差值，单位为毫秒
   tolerance: 20
-  lazy: false
-  # include-all: true  # 跟下方的use冲突
-  use:
-    - primary
+  timeout: 2000
+  max-feiled-times: 3
+  exclude-type: direct
+  url: https://connectivitycheck.platform.hicloud.com/generate_204  # http://wifi.vivo.com.cn/generate_204  # 
+  # include-all: true  # 和 use 单个 provider 冲突
+  # use:    # 和 include-all: true 冲突
+  #   - primary
+
+# 规则订阅公共配置-混合类型
+anchor-rule: &anchor-rule
+  type: http
+  interval: 86400
+  behavior: classical
+  format: yaml
+  # proxy: ✈️ 常用节点
   
-# 规则订阅公共配置-IP类型
-anchor-ip: &anchor-ip 
-  type: http
-  interval: 86400
-  behavior: ipcidr
-  format: mrs
-
-# 规则订阅公共配置-域名类型
-anchor-domain: &anchor-domain
-  type: http
-  interval: 86400
-  behavior: domain
-  format: mrs
-
-
-# 服务器节点订阅
+# 订阅链接
 # 对于订阅来说，path 为选填项，但建议启用
 # 本地配置可以只填 path
 proxy-providers:
-  primary:
+  # 主用机场
+  leiting:
     <<: *anchor-sub
-    path: ./proxy_provider/primary.yaml
-    url: abc
-    exclude-filter: 剩余|无法|套餐|官网|测试
+    path: ./proxy_provider/leiting.yaml
+    url: https://sub.789.st/sub?target=clash&url=
+    # exclude-filter: "剩余|可用|无法|套餐|官网|测试|随机|等级|备用"
+    override:
+      additional-prefix: "[雷霆]"
+    
+  mojie:
+    <<: *anchor-sub
+    path: ./proxy_provider/mojie.yaml
+    url: https://url.v1.mk/sub?target=clash&url=
+    # exclude-filter: "剩余|可用|无法|套餐|官网|测试|随机|等级|备用"
+    override:
+      additional-prefix: "[魔戒]"
 
-  backup:
+  yuntong:
     <<: *anchor-sub
-    path: ./proxy_provider/backup.yaml
-    url: def
-    exclude-filter: 剩余|无法|套餐|官网|测试
+    path: ./proxy_provider/yuntong.yaml
+    url: https://sub.789.st/sub?target=clash&url=
+    # exclude-filter: "剩余|可用|无法|套餐|官网|测试|随机|等级|备用"
+    override:
+      additional-prefix: "[云通]"
 
 # 本地服务器列表
 proxies:
@@ -255,10 +278,10 @@ proxies:
 
 proxy-groups:
 
-  # 地区优先
+  # 策略锚点
   - name: 🐓 中国优先
-    type: select
     hidden: true
+    type: select
     proxies: &C
       - DIRECT
       - 🇭🇰 香港节点
@@ -266,11 +289,9 @@ proxy-groups:
       - 🇹🇼 台湾节点
       - 🇯🇵 日本节点
       - 🇺🇸 美国节点
+      - ✈️ 常用节点
       - 🇦🇶 其他节点
-      - 🚀 倍速节点
-      - 📌 手动选择
-      - 🏴‍☠️ 备用机场
-  
+      
   - name: 🦁 坡县优先
     type: select
     hidden: true
@@ -280,8 +301,8 @@ proxy-groups:
       - 🇹🇼 台湾节点
       - 🇯🇵 日本节点
       - 🇺🇸 美国节点
-      - 🚀 倍速节点
-      - 📌 手动选择
+      - ✈️ 常用节点
+      - 🇦🇶 其他节点
       - DIRECT
 
   - name: 🦅 美国优先
@@ -293,10 +314,8 @@ proxy-groups:
       - 🇸🇬 狮城节点
       - 🇹🇼 台湾节点
       - 🇭🇰 香港节点
+      - ✈️ 常用节点
       - 🇦🇶 其他节点
-      - 🚀 倍速节点
-      - 📌 手动选择
-      - 🏴‍☠️ 备用机场
       - DIRECT
       
   - name: 🐸 亚太优先
@@ -310,297 +329,232 @@ proxy-groups:
       - 🇹🇼 台湾节点
       - 🇯🇵 日本节点
       - 🇺🇸 美国节点
-      - 🚀 倍速节点
-      - 📌 手动选择
-      - 🏴‍☠️ 备用机场
       - DIRECT
   
   # 应用策略
   - name: 🚫 AdBlock
     type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Adblock.png
     proxies: &B
       - REJECT
       - DIRECT
-
-  - name: 📵 BlockOTA
-    type: select
-    proxies:
-      *B
-
+  
   # 中国直连优先
-  - name: 🍎 Apple
-    type: select
-    proxies:
-      *C
-
-  - name: 📹 Bilibili
-    type: select
-    proxies:
-      *C
-
   - name: 🔎 Bing
     type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Bing.png
     proxies:
       *C 
-      
-  # 新加坡节点优先
-  - name: Ⓜ️ Microsoft
-    type: select
-    proxies:
-      *S
-  - name: 🔍 Google
-    type: select
-    proxies:
-      *S
-  - name: 🔎 Copilot
-    type: select
-    proxies:
-      *S
-  - name: 📺 YouTube
-    type: select
-    proxies:
-      *S
-  - name: 🎬 Netflix
-    type: select
-    proxies:
-      *S
-  - name: 📲 Telegram
-    type: select
-    proxies:
-      *S
 
   # 美国节点优先
   - name: 🤖 AI
     type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/ASN.png
     proxies:
       *A
 
-  - name: 💳 PayPal
+  # 新加坡节点优先
+  - name: 🔍 Google
     type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Google.png
     proxies:
-      *A
-
-  - name: 🎧 Spotify
+      *S
+      
+  - name: 📺 YouTube
     type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/YouTube.png
     proxies:
-      *A
-
-  - name: 🎵 TikTok
-    type: select
-    proxies:
-      *A
-
-  - name: 🎥 Disney
-    type: select
-    proxies:
-      *A
-
-  - name: 📽 HBOMax
-    type: select
-    proxies:
-      *A
-
-  - name: 🛰 Wifi-Calling
-    type: select
-    proxies:
-      - 🇬🇧 英国节点
-      - 🇺🇸 美国节点
-      - 📌 手动选择
-      - 🏴‍☠️ 备用机场
-
+      *S
+  
   # 常用节点优先
+  - name: Ⓜ️ Microsoft
+    type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Microsoft.png
+    proxies:
+      *G  
+      
+  - name: 📡 Podcast
+    type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Nucleus.png
+    proxies:
+      *G
+      
   - name: 🌎 国外网站
     type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Global.png
     proxies:
       *G
 
   - name: 🐟 漏网之鱼
     type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Socloud.png
     proxies:
       *G
-  
-  # 常用节点
+            
   - name: ✈️ 常用节点
-    <<: *anchor-url
-    filter: "(?i)^(.*(?:🇭🇰|🇸🇬|🇹🇼|🇯🇵|🇺🇸|港|hk|hongkong|新|sg|singapore|台|tw|taiwan|日|jp|japan|美|us|unitedstates)).*"
-    # exclude-filter: (?i)[4-9]x   # 剔除倍速节点
-
-  - name: 🚀 倍速节点
-    type: select
-    include-all: true
-    filter: (?i)[4-9]x
-
-  - name: 📌 手动选择
-    type: select
-    include-all: true
- 
-  # 地区分组
+    <<: *anchor-proxy
+    # hidden: true
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Xingmeng.png
+    filter: "(?i)^(.*(?:🇭🇰|🇸🇬|🇹🇼|🇯🇵|港|hk|hongkong|新|sg|singapore|台|tw|taiwan|日本|jp|japan)).*"
+    use:    # 和 include-all: true 冲突
+      - leiting
+      - mojie
+      
   - name: 🇭🇰 香港节点
-    <<: *anchor-url
+    <<: *anchor-proxy
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/HK.png
     filter: "(?i)港|hk|hongkong|hong kong"
+    use:    # 和 include-all: true 冲突
+      - leiting
+      - mojie
 
   - name: 🇸🇬 狮城节点
-    <<: *anchor-url
-    filter: "(?i)(新|sg|singapore)"
+    <<: *anchor-proxy
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/SG.png
+    filter: "(?i)(新加坡|sg|singapore)"
+    use:    # 和 include-all: true 冲突
+      - leiting
+      - mojie
     
   - name: 🇹🇼 台湾节点
-    <<: *anchor-url
+    <<: *anchor-proxy
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/TW.png
     filter: "(?i)台|tw|taiwan"
+    use:    # 和 include-all: true 冲突
+      - leiting
+      - mojie
 
   - name: 🇯🇵 日本节点
-    <<: *anchor-url
-    filter: "(?i)日|jp|japan"
+    <<: *anchor-proxy
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/JP.png
+    filter: "(?i)日本|jp|japan"
+    use:    # 和 include-all: true 冲突
+      - leiting
+      # - mojie
 
   - name: 🇺🇸 美国节点
-    <<: *anchor-url
+    <<: *anchor-proxy
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/US.png
     filter: "(?i)美|us|unitedstates|united states"
-
-  - name: 🇬🇧 英国节点
-    <<: *anchor-url
-    filter: "(?i)英|uk"
+    use:    # 和 include-all: true 冲突
+      - leiting
+      # - mojie
   
   - name: 🇦🇶 其他节点
-    <<: *anchor-url
+    <<: *anchor-proxy
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/XD.png
     # filter: (?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*
-    exclude-filter: (?i)🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates|[4-9]x
-
+    exclude-filter: (?i)🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日本|jp|japan|新|sg|singapore|美|us|unitedstates|剩余|可用|无法|套餐|官网|测试|随机|等级|备用|过滤
+    use:    # 和 include-all: true 冲突
+      - leiting
+      # - mojie
+  
+  - name: 🚀 倍速节点
+    type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Xair.png
+    filter: (?i)([4-9]x|x[4-9])
+    include-all: true  # 和 use 单个 provider 冲突
+     
+  - name: 🏴‍☠️ 雷霆机场
+    type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/CCCat.png
+    use:
+      - leiting
+   
+  - name: 🏴‍☠️ 魔戒机场
+    type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Mimemi.png
+    use:
+      - mojie
+      
   - name: 🏴‍☠️ 备用机场
     type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Enet.png
     use:
-      - backup
+      - yuntong
 
-
+ 
 rule-providers:
+    
+  # 本地修正
+  Local:
+    type: file
+    behavior: classical
+    path: ./rule_provider/Local.yaml
+    interval: 86400
+    
+  LocalCom:
+    type: file
+    behavior: classical
+    path: ./rule_provider/LocalCom.yaml
+    interval: 86400
   
-  # 服务
-  MiTV:
-    type: http
-    behavior: classical
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdvertisingMiTV/AdvertisingMiTV.yaml
-    path: ./rule_provider/MiTV.yaml
-    interval: 604800
-
-  AppleOTA:
-    type: http
-    behavior: classical
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/SystemOTA/SystemOTA.yaml
-    path: ./rule_provider/SystemOTA.yaml
-    interval: 604800
-
-  Bing:
-    type: http
-    behavior: classical
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Bing/Bing.yaml
-    path: ./rule_provider/Bing.yaml
-    interval: 86400
-
+  LAN:
+    <<: *anchor-rule
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml
+    path: ./rule_provider/LAN.yaml
+    
+  # 国外服务 
   AI:
-    type: http
-    behavior: domain
-    format: mrs
-    url: https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/ai.mrs
-    path: ./rule_provider/ai.mrs
-    interval: 86400
+    <<: *anchor-rule
+    url: https://raw.githubusercontent.com/RealSeek/Clash_Rule_DIY/mihomo/PROXY/no_ip/AI_no_ip.yaml
+    path: ./rule_provider/AI.yaml
+  
+  Bing:
+    <<: *anchor-rule
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bing/Bing.yaml
+    path: ./rule_provider/Bing.yaml
 
-  TikTok:
-    type: http
-    behavior: classical
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TikTok/TikTok.yaml
-    path: ./rule_provider/TikTok.yaml
-    interval: 604800
+  Microsoft:
+    <<: *anchor-rule
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml
+    path: ./rule_provider/Microsoft.yaml
+  
+  Google:
+    <<: *anchor-rule
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml
+    path: ./rule_provider/Google.yaml
+    
+  YouTube:
+    <<: *anchor-rule
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml
+    path: ./rule_provider/YouTube.yaml
 
-  DMM:
-    type: http
-    behavior: classical
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/DMM/DMM.yaml
-    path: ./rule_provider/DMM.yaml
+  GlobalMedia:
+    <<: *anchor-rule
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml
+    path: ./rule_provider/GlobalMedia.yaml
 
-  UK-wifi-call:
-    type: http
-    behavior: classical
-    url: https://raw.githubusercontent.com/randyho/Network_Tools/refs/heads/main/rule/UK-wifi-call.yaml
-    path: ./rule_provider/UK-wifi-call.yaml
-
-  99weiqi:
-    type: http
-    behavior: classical
-    url: https://raw.githubusercontent.com/randyho/Network_Tools/refs/heads/main/rule/99weiqi.yaml
-    path: ./rule_provider/99weiqi.yaml
-
-  Tencent:
-    type: http
-    behavior: classical
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Tencent/Tencent.yaml
-    path: ./rule_provider/Tencent.yaml
-    interval: 604800
-
+  Podcast:
+    <<: *anchor-rule
+    url: https://raw.githubusercontent.com/randyho/Network_Tools/main/rule/Podcast.yaml
+    path: ./rule_provider/Podcast.yaml
+    
   China:
-    type: http
-    behavior: classical
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/China/China_Classical.yaml
-    path: ./rule_provider/China_Classical.yaml
-    interval: 604800
-
-  cn_domain:
-    <<: *anchor-domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+    <<: *anchor-rule
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml
+    path: ./rule_provider/China.yaml
 
 rules:
-  # 直连
-  - GEOIP,lan,DIRECT,no-resolve
-  - GEOSITE,private,DIRECT,no-resolve
+  # 私有地址
+  # - GEOSITE,private,DIRECT
   
-  # 广告拦截
-  - RULE-SET,MiTV,🚫 AdBlock
-  - GEOSITE,category-ads-all,🚫 AdBlock
-
+  # 公司网站
+  - RULE-SET,LocalCom,DIRECT
+  
   # 国外服务
-  - GEOSITE,apple,🍎 Apple
-  - GEOSITE,apple-cn,🍎 Apple
-  - GEOSITE,onedrive,DIRECT
-  - GEOSITE,microsoft@cn,DIRECT
-  - GEOSITE,Bing,🔎 Bing
-  - RULE-SET,AI,🤖 AI
-  - GEOIP,google,🔍 Google
-  - GEOSITE,google,🔍 Google
-  - GEOSITE,google-cn,🔍 Google # Google CN 不走代理会导致香港等地区节点 Play Store 异常
-  - GEOSITE,paypal,💳 PayPal
-  - GEOSITE,spotify,🎧 Spotify
-  - GEOIP,telegram,📲 Telegram
-  - GEOSITE,telegram,📲 Telegram
-  - RULE-SET,UK-wifi-call,🛰 Wifi-Calling
-
-  # 流媒体
-  - GEOSITE,bilibili,📹 Bilibili
-  - GEOSITE,youtube,📺 YouTube
-  - GEOIP,netflix,🎬 Netflix
-  - GEOSITE,netflix,🎬 Netflix
-  - RULE-SET,TikTok,🎵 TikTok
-  - GEOSITE,disney,🎥 Disney
-  - GEOSITE,hbo,📽 HBOMax
-
-  # 国外兜底规则
-  - RULE-SET,DMM,🇯🇵 日本节点
-  - GEOSITE,geolocation-!cn,🌎 国外网站
+  - RULE-SET,Microsoft,Ⓜ️ Microsoft
+  - RULE-SET,Bing,🔎 Bing
+  - RULE-SET,Google,🔍 Google
+  - RULE-SET,AI,🤖 AI  # 让gemini走Google规则
+  - RULE-SET,YouTube,📺 YouTube
+  - RULE-SET,Podcast,📡 Podcast
+  - RULE-SET,Local,🌎 国外网站
+  - RULE-SET,GlobalMedia,🌎 国外网站
   
   # 国内直连
-  - RULE-SET,99weiqi,DIRECT
-  - RULE-SET,Tencent,DIRECT
   - RULE-SET,China,DIRECT
-  - RULE-SET,cn_domain,DIRECT
-  - GEOSITE,geolocation-cn,DIRECT
-  - GEOSITE,cn,DIRECT
-
-  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
-  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
-  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
-  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
-  - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
-  - IP-CIDR,224.0.0.0/4,DIRECT,no-resolve
-  # - IP-CIDR,fe80::/10,DIRECT
-  - IP-CIDR,119.28.28.28/32,DIRECT
-  - IP-CIDR,182.254.116.0/24,DIRECT
-  # - RULE-SET,ChinaIP,DIRECT,no-resolve
+  - RULE-SET,LAN,DIRECT
   - GEOIP,CN,DIRECT
-
+  
   - MATCH,🐟 漏网之鱼
