@@ -58,8 +58,6 @@ geox-url:
   geosite: https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
   mmdb: https://github.com/Loyalsoldier/geoip@release/Country-without-asn.mmdb
   asn: https://github.com/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb
-  # mmdb: https://gitlab.com/Masaiki/GeoIP2-CN/-/raw/release/Country.mmdb
-  # asn: https://gitlab.com/Loon0x00/loon_data/-/raw/main/geo/GeoLite2-ASN.mmdb
 
 
 # 缓存
@@ -224,11 +222,11 @@ anchor-proxy: &anchor-proxy
   lazy: false
   disable-udp: false
   # 节点连通性检测时间，单位为秒
-  interval: 600
+  interval: 300
   # 节点自动切换差值，单位为毫秒
   tolerance: 20
   timeout: 2000
-  max-feiled-times: 3
+  max-feiled-times: 2
   exclude-type: direct
   url: https://connectivitycheck.platform.hicloud.com/generate_204  # http://wifi.vivo.com.cn/generate_204  # 
   # include-all: true  # 和 use 单个 provider 冲突
@@ -263,14 +261,6 @@ proxy-providers:
     # exclude-filter: "剩余|可用|无法|套餐|官网|测试|随机|等级|备用"
     override:
       additional-prefix: "[魔戒]"
-
-  yuntong:
-    <<: *anchor-sub
-    path: ./proxy_provider/yuntong.yaml
-    url: https://sub.789.st/sub?target=clash&url=
-    # exclude-filter: "剩余|可用|无法|套餐|官网|测试|随机|等级|备用"
-    override:
-      additional-prefix: "[云通]"
 
 # 本地服务器列表
 proxies:
@@ -338,13 +328,6 @@ proxy-groups:
     proxies: &B
       - REJECT
       - DIRECT
-  
-  # 中国直连优先
-  - name: 🔎 Bing
-    type: select
-    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Bing.png
-    proxies:
-      *C 
 
   # 美国节点优先
   - name: 🤖 AI
@@ -466,13 +449,6 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Mimemi.png
     use:
       - mojie
-      
-  - name: 🏴‍☠️ 备用机场
-    type: select
-    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Enet.png
-    use:
-      - yuntong
-
  
 rule-providers:
     
@@ -500,11 +476,6 @@ rule-providers:
     url: https://raw.githubusercontent.com/RealSeek/Clash_Rule_DIY/mihomo/PROXY/no_ip/AI_no_ip.yaml
     path: ./rule_provider/AI.yaml
   
-  Bing:
-    <<: *anchor-rule
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bing/Bing.yaml
-    path: ./rule_provider/Bing.yaml
-
   Microsoft:
     <<: *anchor-rule
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml
@@ -544,7 +515,6 @@ rules:
   
   # 国外服务
   - RULE-SET,Microsoft,Ⓜ️ Microsoft
-  - RULE-SET,Bing,🔎 Bing
   - RULE-SET,Google,🔍 Google
   - RULE-SET,AI,🤖 AI  # 让gemini走Google规则
   - RULE-SET,YouTube,📺 YouTube
