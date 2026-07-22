@@ -58,6 +58,8 @@ geox-url:
   geosite: https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
   mmdb: https://github.com/Loyalsoldier/geoip@release/Country-without-asn.mmdb
   asn: https://github.com/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb
+  # mmdb: https://gitlab.com/Masaiki/GeoIP2-CN/-/raw/release/Country.mmdb
+  # asn: https://gitlab.com/Loon0x00/loon_data/-/raw/main/geo/GeoLite2-ASN.mmdb
 
 
 # 缓存
@@ -79,12 +81,6 @@ ntp:
 # 实验性功能
 experimental:
   ignore-resolve-fail: true # 忽略 DNS 解析失败，默认值为 true
-
-# # 实验性功能 hosts, 支持通配符 (例如 *.clash.dev 甚至 *.foo.*.example.com)
-# # 静态的域名 比 通配域名 具有更高的优先级 (foo.example.com 优先于 *.example.com)
-# 注意: +.foo.com 的效果等同于 .foo.com 和 foo.com
-hosts:
-'mtalk.google.com': 108.177.125.188
 
 # 域名嗅探
 sniffer:
@@ -142,33 +138,10 @@ dns:
     - '+.msftconnecttest.com'
     - 'detectportal.firefox.com'
     - 'localhost.*.qq.com'
-    - '+.cmpassport.com'
-    - 'id6.me'
-    - 'open.e.189.cn'
-    - 'mdn.open.wo.cn'
-    - 'auth.wosms.cn'
-    - '+.brother.cn'
-    - '+.boc.cn'
-    - '+.ccb.com'
-    - '+.ccb.com.cn'
-    - '+.cmbchina.com'
-    - '+.pingan.com.cn'
-    - '+.ninebot.com'
-    # - '223.5.5.5'
-    # - '1.12.12.12'
-    # - '180.184.1.1'
-    # - '+.qq.com'
-    # - '+.tencent.com'
-    # - '+.wechat.com'
-    # - '+.wechatapp.com'    
-    # - 'rule-set:China'
-    # - geosite:private
-    # - geosite:cn
 
   # 用于解析 nameserver，fallback 以及其他 DNS 服务器配置的，DNS 服务域名
   # 只能使用纯 IP 地址，可使用加密 DNS
   default-nameserver:
-    - system
     - tls://223.5.5.5:853
     - tls://119.29.29.29:853
     - system # append DNS server from system configuration. If not found, it would print an error log and skip.
@@ -204,13 +177,13 @@ dns:
 anchor-sub: &anchor-sub
   type: http
   # 自动更新订阅时间，单位为秒
-  interval: 604800
+  interval: 86400
   # proxy: ✈️ 常用节点
   health-check:
     enable: true
     url: https://cp.cloudflare.com
     # 节点连通性检测时间，单位为秒
-    interval: 3600
+    interval: 300
     # 节点超时延迟，单位为毫秒
     timeout: 1000
     # 节点自动切换差值，单位为毫秒
@@ -225,7 +198,7 @@ anchor-proxy: &anchor-proxy
   interval: 300
   # 节点自动切换差值，单位为毫秒
   tolerance: 20
-  timeout: 2000
+  timeout: 1000
   max-feiled-times: 2
   exclude-type: direct
   url: https://connectivitycheck.platform.hicloud.com/generate_204  # http://wifi.vivo.com.cn/generate_204  # 
@@ -236,7 +209,7 @@ anchor-proxy: &anchor-proxy
 # 规则订阅公共配置-混合类型
 anchor-rule: &anchor-rule
   type: http
-  interval: 86400
+  interval: 648000
   behavior: classical
   format: yaml
   # proxy: ✈️ 常用节点
@@ -245,22 +218,30 @@ anchor-rule: &anchor-rule
 # 对于订阅来说，path 为选填项，但建议启用
 # 本地配置可以只填 path
 proxy-providers:
-  # 主用机场
-  leiting:
-    <<: *anchor-sub
-    path: ./proxy_provider/leiting.yaml
-    url: https://sub.789.st/sub?target=clash&url=
-    # exclude-filter: "剩余|可用|无法|套餐|官网|测试|随机|等级|备用"
-    override:
-      additional-prefix: "[雷霆]"
-    
   mojie:
     <<: *anchor-sub
     path: ./proxy_provider/mojie.yaml
-    url: https://url.v1.mk/sub?target=clash&url=
+    url: https://api.v1.mk/sub?target=clash&url=
     # exclude-filter: "剩余|可用|无法|套餐|官网|测试|随机|等级|备用"
     override:
       additional-prefix: "[魔戒]"
+  
+  leiting:
+    <<: *anchor-sub
+    path: ./proxy_provider/leiting.yaml
+    url: https://api.v1.mk/sub?target=clash&url=
+    # exclude-filter: "剩余|可用|无法|套餐|官网|测试|随机|等级|备用"
+    override:
+      additional-prefix: "[雷霆]" 
+      
+  yuntong:
+    <<: *anchor-sub
+    path: ./proxy_provider/yuntong.yaml
+    url: https://api.v1.mk/sub?target=clash&url=
+    # exclude-filter: "剩余|可用|无法|套餐|官网|测试|随机|等级|备用"
+    override:
+      additional-prefix: "[渔云]"
+
 
 # 本地服务器列表
 proxies:
@@ -328,15 +309,25 @@ proxy-groups:
     proxies: &B
       - REJECT
       - DIRECT
+      
+  # 中国直连优先
+  - name: Ⓜ️ Microsoft
+    type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Microsoft.png
+    proxies:
+      *C 
 
-  # 美国节点优先
+  # 新加坡节点优先
   - name: 🤖 AI
     type: select
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/ASN.png
     proxies:
-      *A
-
-  # 新加坡节点优先
+      - 🗽 AI节点
+      - 🇸🇬 狮城节点
+      - 🇹🇼 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇸 美国节点
+      
   - name: 🔍 Google
     type: select
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Google.png
@@ -350,12 +341,6 @@ proxy-groups:
       *S
   
   # 常用节点优先
-  - name: Ⓜ️ Microsoft
-    type: select
-    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Microsoft.png
-    proxies:
-      *G  
-      
   - name: 📡 Podcast
     type: select
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Nucleus.png
@@ -378,50 +363,65 @@ proxy-groups:
     <<: *anchor-proxy
     # hidden: true
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Xingmeng.png
-    filter: "(?i)^(.*(?:🇭🇰|🇸🇬|🇹🇼|🇯🇵|港|hk|hongkong|新|sg|singapore|台|tw|taiwan|日本|jp|japan)).*"
+    filter: "(?i)^(.*(?:🇭🇰|🇸🇬|🇹🇼|🇯🇵|港|hk|hongkong|新|sg|singapore|台|tw|taiwan|日本|jp|japan|韩)).*"
     use:    # 和 include-all: true 冲突
+      # - mojie
       - leiting
+      - yuntong 
+
+  - name: 🗽 AI节点
+    <<: *anchor-proxy
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Wallless.png
+    filter: "(?i)(新加坡|sg|singapore)"
+    use:    # 和 include-all: true 冲突
       - mojie
+      - leiting
+      # - yuntong
       
   - name: 🇭🇰 香港节点
     <<: *anchor-proxy
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/HK.png
     filter: "(?i)港|hk|hongkong|hong kong"
     use:    # 和 include-all: true 冲突
+      # - mojie
       - leiting
-      - mojie
+      - yuntong
 
   - name: 🇸🇬 狮城节点
     <<: *anchor-proxy
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/SG.png
     filter: "(?i)(新加坡|sg|singapore)"
     use:    # 和 include-all: true 冲突
+      # - mojie
       - leiting
-      - mojie
+      - yuntong
     
   - name: 🇹🇼 台湾节点
     <<: *anchor-proxy
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/TW.png
     filter: "(?i)台|tw|taiwan"
     use:    # 和 include-all: true 冲突
-      - leiting
       - mojie
+      - leiting
+      - yuntong
 
   - name: 🇯🇵 日本节点
     <<: *anchor-proxy
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/JP.png
     filter: "(?i)日本|jp|japan"
     use:    # 和 include-all: true 冲突
+      - mojie
       - leiting
-      # - mojie
+      - yuntong
 
   - name: 🇺🇸 美国节点
     <<: *anchor-proxy
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/US.png
     filter: "(?i)美|us|unitedstates|united states"
     use:    # 和 include-all: true 冲突
+      - mojie
       - leiting
-      # - mojie
+      - yuntong
   
   - name: 🇦🇶 其他节点
     <<: *anchor-proxy
@@ -429,27 +429,28 @@ proxy-groups:
     # filter: (?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*
     exclude-filter: (?i)🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日本|jp|japan|新|sg|singapore|美|us|unitedstates|剩余|可用|无法|套餐|官网|测试|随机|等级|备用|过滤
     use:    # 和 include-all: true 冲突
+      - mojie
       - leiting
-      # - mojie
-  
-  - name: 🚀 倍速节点
-    type: select
-    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Xair.png
-    filter: (?i)([4-9]x|x[4-9])
-    include-all: true  # 和 use 单个 provider 冲突
+      - yuntong
      
-  - name: 🏴‍☠️ 雷霆机场
+  - name: 🏴‍☠️ 魔戒机场
     type: select
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/CCCat.png
     use:
-      - leiting
-   
-  - name: 🏴‍☠️ 魔戒机场
+      - mojie
+
+  - name: 🏴‍☠️ 雷霆机场
     type: select
     icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Mimemi.png
     use:
-      - mojie
- 
+      - leiting 
+      
+  - name: 🏴‍☠️ 渔云机场
+    type: select
+    icon: https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/Color/Enet.png
+    use:
+      - yuntong
+      
 rule-providers:
     
   # 本地修正
@@ -467,43 +468,53 @@ rule-providers:
   
   LAN:
     <<: *anchor-rule
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml
+    url: https://v4.gh-proxy.org/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml
     path: ./rule_provider/LAN.yaml
     
   # 国外服务 
-  AI:
+  Claude:
     <<: *anchor-rule
-    url: https://raw.githubusercontent.com/RealSeek/Clash_Rule_DIY/mihomo/PROXY/no_ip/AI_no_ip.yaml
-    path: ./rule_provider/AI.yaml
-  
+    url: https://v4.gh-proxy.org/https://raw.githubusercontent.com/randyho/Network_Tools/main/rule/Claude.yaml
+    path: ./rule_provider/Claude.yaml
+ 
+  OpenAI:
+    <<: *anchor-rule
+    url: https://v4.gh-proxy.org/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OpenAI/OpenAI.yaml
+    path: ./rule_provider/OpenAI.yaml
+
+  Gemini:
+    <<: *anchor-rule
+    url: https://v4.gh-proxy.org/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Gemini/Gemini.yaml
+    path: ./rule_provider/Gemini.yaml
+    
   Microsoft:
     <<: *anchor-rule
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml
+    url: https://v4.gh-proxy.org/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml
     path: ./rule_provider/Microsoft.yaml
   
   Google:
     <<: *anchor-rule
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml
+    url: https://v4.gh-proxy.org/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml
     path: ./rule_provider/Google.yaml
     
   YouTube:
     <<: *anchor-rule
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml
+    url: https://v4.gh-proxy.org/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml
     path: ./rule_provider/YouTube.yaml
 
   GlobalMedia:
     <<: *anchor-rule
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml
+    url: https://v4.gh-proxy.org/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml
     path: ./rule_provider/GlobalMedia.yaml
 
   Podcast:
     <<: *anchor-rule
-    url: https://raw.githubusercontent.com/randyho/Network_Tools/main/rule/Podcast.yaml
+    url: https://v4.gh-proxy.org/https://raw.githubusercontent.com/randyho/Network_Tools/main/rule/Podcast.yaml
     path: ./rule_provider/Podcast.yaml
     
   China:
     <<: *anchor-rule
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml
+    url: https://v4.gh-proxy.org/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml
     path: ./rule_provider/China.yaml
 
 rules:
@@ -513,14 +524,18 @@ rules:
   # 公司网站
   - RULE-SET,LocalCom,DIRECT
   
-  # 国外服务
+  # 国内优先
   - RULE-SET,Microsoft,Ⓜ️ Microsoft
+  # 国外服务
+  - RULE-SET,Claude,🤖 AI  
+  - RULE-SET,OpenAI,🤖 AI 
+  - RULE-SET,Gemini,🔍 Google 
   - RULE-SET,Google,🔍 Google
-  - RULE-SET,AI,🤖 AI  # 让gemini走Google规则
   - RULE-SET,YouTube,📺 YouTube
   - RULE-SET,Podcast,📡 Podcast
   - RULE-SET,Local,🌎 国外网站
   - RULE-SET,GlobalMedia,🌎 国外网站
+  - DOMAIN-SUFFIX,z.ai,🌎 国外网站
   
   # 国内直连
   - RULE-SET,China,DIRECT
