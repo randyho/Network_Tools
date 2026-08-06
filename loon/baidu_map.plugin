@@ -1,0 +1,33 @@
+#!name = 百度地图
+#!desc = 移除广告，支持 15.x 及以上版本
+#!author = Randy RuCu6
+#!update = 2024-02-17 10:35
+#!homepage = https://github.com/randyho/Network_Tools
+#!icon = https://raw.githubusercontent.com/randyho/Network_Tools/main/icon/baidu_map.png
+
+[Argument]
+bdduditu_enable = switch,true,false,tag=百度地图-脚本开关
+
+[Rule]
+DOMAIN, afd.baidu.com, REJECT
+DOMAIN, afdconf.baidu.com, REJECT
+DOMAIN, httpdns.baidubce.com, REJECT
+DOMAIN, lc.map.baidu.com, REJECT
+# IP-CIDR, 180.76.76.112/32, REJECT, no-resolve
+# IP-CIDR, 180.76.76.200/32, REJECT, no-resolve
+
+[Rewrite]
+^https?:\/\/dss0\.bdstatic\.com\/-0U0bnSm1A5BphGlnYG\/ reject-200
+^https?:\/\/dss0\.bdstatic\.com\/.+/tam-ogel\/.+\.(jpg|mp4) reject
+^https?:\/\/tb1\.bdstatic\.com\/tb\/cms\/ngmis\/adsense\/*.jpg reject
+^https?:\/\/tb2\.bdstatic\.com\/tb\/mobile\/spb\/widget\/jump reject-img
+^https?:\/\/ss0\.bdstatic\.com/.+?_\d{3}_\d{4}\.jpg reject-200
+^https?:\/\/gss0\.bdstatic\.com\/.+?\/static\/wiseindex\/img\/bd_red_packet\.png reject-img
+# 小横条
+^https:\/\/newclient\.map\.baidu\.com\/client\/noticebar\/get\?  response-body-json-del content.multi_data
+
+[Script]
+http-response ^https?:\/\/newclient\.map\.baidu\.com\/client\/phpui2\/\?qt=ads script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/baidumap.js, requires-body=true, timeout=60, tag=百度地图广告, enable=
+
+[MITM]
+hostname = dss0.bdstatic.com, tb1.bdstatic.com, tb2.bdstatic.com, ss0.bdstatic.com, gss0.bdstatic.com, newclient.map.baidu.com
